@@ -80,7 +80,7 @@ export default {
 
 <style scoped>
     #map {
-        height: 500px;
+        height: 600px;
         width: 100%;
     }
 </style>

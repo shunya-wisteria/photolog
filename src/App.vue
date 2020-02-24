@@ -7,41 +7,33 @@
       v-if="!showAsFull"
     >
       <div class="d-flex align-center">
-        <v-img
-          alt="Vuetify Logo"
-          class="shrink mr-2"
-          contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-          transition="scale-transition"
-          width="40"
-        />
-
-        <v-img
-          alt="Vuetify Name"
-          class="shrink mt-1 hidden-sm-and-down"
-          contain
-          min-width="100"
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-          width="100"
-        />
+        <v-app-bar-nav-icon 
+          @click="drawer=true" 
+          v-if="menu"
+          style="margin-right: 5px;"
+        ></v-app-bar-nav-icon>
+        <h1 style="font-weight:300;font-size*160%;">PhotoLog</h1>
       </div>
 
       <v-spacer></v-spacer>
 
-      <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-        text
-      >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
-      </v-btn>
     </v-app-bar>
 
-    <v-content>
-      <!-- <HelloWorld/> -->
+    <!-- <v-content>
       <router-view />
+    </v-content> -->
+
+    <v-content style="background-color:#F5F5F5">
+      <v-container style="margin-top:10px;">
+        <v-row align="center" justify="center">
+          <v-col cols=12>
+            <router-view />
+          </v-col>
+        </v-row>
+      </v-container>
     </v-content>
+
+
   </v-app>
 </template>
 
@@ -65,7 +57,14 @@ export default {
   },
 
   data: () => ({
-    //
+    menu : true,
+    drawer : false
   })
 };
 </script>
+
+<style scoped>
+  h1{
+    font-weight: 400;
+  }
+</style>
