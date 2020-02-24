@@ -3,6 +3,8 @@ import Router       from 'vue-router'
 import store        from '@/store'
 import HelloWorld   from '@/components/HelloWorld.vue'
 import PhotoMap     from '@/components/PhotoMap.vue'
+import Migrate      from '@/components/Migrate.vue'
+import { migrate } from '../store/modules/migrate'
 
 Vue.use(Router)
 
@@ -20,6 +22,10 @@ const router = new Router({
           name: 'photoMap',
           component: PhotoMap
       }
+    //   {
+    //       path: '/migrate',
+    //       component: Migrate
+    //   }
     ]
 })
 

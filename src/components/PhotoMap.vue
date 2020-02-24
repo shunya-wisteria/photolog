@@ -49,11 +49,11 @@ export default {
 
                 let contentHtml = "<div style='padding: 5px 10px 10px 10px; display:block;'><p style='color:#555555; font-size:150%; font-weight:400; margin-bottom:8px;'>" + this.$store.getters.PosMarkers[i].name + "</p>"
                 contentHtml = contentHtml + "<p style='color:#555555; margin-bottom:8px;'>" + this.$store.getters.PosMarkers[i].desc + "</p>"
-                if(this.$store.getters.PosMarkers[i].refurl != null)
+                if(this.$store.getters.PosMarkers[i].refurl != null && this.$store.getters.PosMarkers[i].refurl != "")
                 {
                     contentHtml = contentHtml + "<p style='margin-bottom:8px;'><a href='" + this.$store.getters.PosMarkers[i].refurl +  "' target='_blank' style='color:#555555;'>関連記事</a></p>"
                 }
-                if(this.$store.getters.PosMarkers[i].photo != null)
+                if(this.$store.getters.PosMarkers[i].photo != null && this.$store.getters.PosMarkers[i].photo != "")
                 {
                     contentHtml = contentHtml + "<img src='" + this.$store.getters.PosMarkers[i].photo + "' width=250px>"
                 }
