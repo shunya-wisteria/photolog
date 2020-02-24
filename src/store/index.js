@@ -1,7 +1,9 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-import router from '@/router'
-import firebase from 'firebase'
+import Vue        from 'vue'
+import Vuex       from 'vuex'
+import router     from '@/router'
+import firebase   from 'firebase'
+
+import {migrate}  from './modules/migrate'
 
 Vue.use(Vuex)
 
@@ -13,24 +15,6 @@ export default new Vuex.Store({
 
     // poslMakers
     posMarkers : []
-    // posMarkers : [
-    //   {
-    //     name:"六義園",
-    //     desc:"2019.12.01",
-    //     lat:35.7331093,
-    //     lng:139.7464807,
-    //     photo:"https://dl.dropboxusercontent.com/s/txvqb0jq9vnpa3s/rikugien.jpg",
-    //     refurl:"https://shunya-wisteria.tumblr.com/post/189526513968/2019%E5%85%AD%E7%BE%A9%E5%9C%92pn1"
-    //   },
-    //   {
-    //     name:"清澄庭園",
-    //     desc:"2019.12.01",
-    //     lat:35.6806762,
-    //     lng:139.7978044,
-    //     photo:"https://dl.dropboxusercontent.com/s/pqktphdce4d9ylp/IMG_2473.JPG",
-    //     refurl:"https://shunya-wisteria.tumblr.com/post/189526513968/2019%E5%85%AD%E7%BE%A9%E5%9C%92pn1"
-    //   }
-    // ]
   },
 
   getters:{
@@ -75,15 +59,28 @@ export default new Vuex.Store({
         let posRec = posData.data()
 
         // format datetime
-        let cd     = new Date(posRec["created-at"].seconds * 1000)
-        let cyear  = cd.getFullYear()
-        let cmonth = (`0${cd.getMonth() + 1}`).slice(-2)
-        let cday   = (`0${cd.getDate()}`).slice(-2)
+        let cyear
+        let cmonth
+        let cday
+        let uyear
+        let umonth
+        let uday
 
-        let ud     = new Date(posRec["updated-at"].seconds * 1000)
-        let uyear  = ud.getFullYear()
-        let umonth = (`0${ud.getMonth() + 1}`).slice(-2)
-        let uday   = (`0${ud.getDate()}`).slice(-2)
+        if(posRec["created-at"] != null)
+        {
+          let cd     = new Date(posRec["created-at"].seconds * 1000)
+          cyear  = cd.getFullYear()
+          cmonth = (`0${cd.getMonth() + 1}`).slice(-2)
+          cday   = (`0${cd.getDate()}`).slice(-2)
+        }
+
+        if(posRec["updated-at"] != null)
+        {
+          let ud     = new Date(posRec["updated-at"].seconds * 1000)
+          uyear  = ud.getFullYear()
+          umonth = (`0${ud.getMonth() + 1}`).slice(-2)
+          uday   = (`0${ud.getDate()}`).slice(-2)
+        }
 
         let posMarker = {}
         posMarker["name"]  = posRec.name
@@ -92,6 +89,7 @@ export default new Vuex.Store({
         posMarker["lng"]   = posRec.pos._long
         posMarker["photo"] = posRec.photo
         posMarker["refurl"]  = posRec.refurl
+        
         posMarker["created-at"]  = cyear + "/" + cmonth + "/" + cday
         posMarker["updated-at"]  = uyear + "/" + umonth + "/" + uday
         
@@ -104,5 +102,6 @@ export default new Vuex.Store({
 
   },
   modules: {
+    migrate
   }
 })
