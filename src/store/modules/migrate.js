@@ -24,7 +24,7 @@ export const migrate = {
 
 
             let db = firebase.firestore()
-            let uid = "jUQpAh4OSNZaiL8RuIy811xdJMy2"
+            let uid = "fVP6unCetWaz8GXL3xASqeGCAmb2"
 
             for(let inputObj of inputData)
             {

@@ -16,7 +16,7 @@
             <div id='map' style="width:100%; height:300px;margin-top:30px;" v-show="showMap"></div>
         </div>
 
-        <div>
+        <div style="margin-bottom:50px;">
             <h3>Notes</h3>
             <v-form style="margin-left:10px;">
                 <v-text-field

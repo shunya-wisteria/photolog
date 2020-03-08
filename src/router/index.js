@@ -35,11 +35,10 @@ const router = new Router({
           component: Insert
       }
 
-
-    //   {
-    //       path: '/migrate',
-    //       component: Migrate
-    //   }
+      // {
+      //     path: '/migrate',
+      //     component: Migrate
+      // }
     ]
 })
 
