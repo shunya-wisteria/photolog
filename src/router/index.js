@@ -1,7 +1,7 @@
 import Vue          from 'vue'
 import Router       from 'vue-router'
 import store        from '@/store'
-import HelloWorld   from '@/components/HelloWorld.vue'
+import Home         from '@/components/Home.vue'
 import PhotoMap     from '@/components/PhotoMap.vue'
 import Login        from '@/components/Login.vue'
 import Insert       from '@/components/Insert.vue'
@@ -17,7 +17,7 @@ const router = new Router({
       {
         path: '/',
         name: 'home',
-        component: HelloWorld
+        component: Home
       },
       {
         path: '/map/:uid',

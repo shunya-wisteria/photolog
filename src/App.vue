@@ -60,18 +60,18 @@
           </v-list-item>
         </router-link>
 
-        <router-link :to="{name:'insert'}" style="text-decoration:none">
-          <v-list-item v-on:click="toLink()">
-            <v-list-item-content>
-              <v-list-item-title>AddEntry</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-        </router-link>
-
         <router-link v-bind:to="'/map/'+userInfo.uid" style="text-decoration:none">
           <v-list-item v-on:click="toLink()">
             <v-list-item-content>
               <v-list-item-title>MyMap</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </router-link>
+
+        <router-link :to="{name:'insert'}" style="text-decoration:none">
+          <v-list-item v-on:click="toLink()">
+            <v-list-item-content>
+              <v-list-item-title>AddEntry</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </router-link>
