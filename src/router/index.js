@@ -3,6 +3,8 @@ import Router       from 'vue-router'
 import store        from '@/store'
 import HelloWorld   from '@/components/HelloWorld.vue'
 import PhotoMap     from '@/components/PhotoMap.vue'
+import Login        from '@/components/Login.vue'
+import Insert       from '@/components/Insert.vue'
 import Migrate      from '@/components/Migrate.vue'
 import { migrate } from '../store/modules/migrate'
 
@@ -18,10 +20,22 @@ const router = new Router({
         component: HelloWorld
       },
       {
-          path: '/map/:uid',
-          name: 'photoMap',
-          component: PhotoMap
+        path: '/map/:uid',
+        name: 'photoMap',
+        component: PhotoMap
+      },
+      {
+        path: '/login',
+        name: 'login',
+        component: Login
+      },
+      {
+          path: '/insert',
+          name: 'insert',
+          component: Insert
       }
+
+
     //   {
     //       path: '/migrate',
     //       component: Migrate
