@@ -1,6 +1,19 @@
 <template>
     <section>
         <div id="map"></div>
+        
+        <div
+            v-if="!showAsFull"
+            style="margin-top:30px;"
+        >
+            <p style="margin:0px;">埋込用URL</p>
+            <v-text-field
+                color="blue-grey lighten-1"
+                v-model="mapUrl"
+                readonly
+                style="padding:0px;"
+            ></v-text-field>
+        </div>
     </section>
 </template>
 
@@ -16,7 +29,18 @@ export default {
 
             newsData    :   [],
 
-            infoMsgs : this.$store.getters.portalInfos
+            infoMsgs : this.$store.getters.portalInfos,
+
+            mapUrl : ""
+        }
+    },
+
+    computed:{
+        showAsFull : {
+        get()
+        {
+            return this.$store.getters.ShowAsFull
+        }
         }
     },
 
@@ -29,6 +53,8 @@ export default {
 
         //  地図描画
         this.initMap()
+
+        this.mapUrl = location.href + "?mode=1"
     },
 
     methods:{
