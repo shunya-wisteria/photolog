@@ -14,7 +14,8 @@ export default new Vuex.Store({
   state: {
     displayControl:{
       showAsFull : null,
-      showRefUrl : null
+      showRefUrl : null,
+      loading    : false
     },
 
     // poslMakers
@@ -33,6 +34,11 @@ export default new Vuex.Store({
     ShowRefUrl(state)
     {
       return state.displayControl.showRefUrl
+    },
+
+    Loading(state)
+    {
+      return state.displayControl.loading
     },
 
     PosMarkers(state)
@@ -57,6 +63,11 @@ export default new Vuex.Store({
       state.displayControl.showRefUrl = payload
     },
 
+    setLoading(state,payload)
+    {
+      state.displayControl.loading = payload
+    },
+
     setPosMarkers(state, payload)
     {
       state.posMarkers = payload
@@ -78,6 +89,9 @@ export default new Vuex.Store({
     //---------------------------
     async GetPosData({commit}, uid)
     {
+      
+      commit('setLoading',true)
+
       let posMarkers = []
 
       let db = firebase.firestore()
@@ -124,6 +138,7 @@ export default new Vuex.Store({
       })
 
       commit('setPosMarkers',posMarkers)
+      commit('setLoading',false)
     },
 
     //---------------------------
@@ -155,6 +170,8 @@ export default new Vuex.Store({
     //---------------------------    
     async InsertPos({commit}, args)
     {
+      commit('setLoading',true)
+
       let user = this.getters['firebaseCommon/userInfo']
       let db = firebase.firestore()
       let self = this
@@ -185,8 +202,10 @@ export default new Vuex.Store({
               db.collection("PhotoLog").doc(user.uid).collection("Log").doc().set(args.insObj)
               .then(function (docRef) {
                 self.dispatch('widget/SetModalMsg',{enabled:true, title:"Info", body:"登録しました。"})
+                commit('setLoading',false)
               })
               .catch(function (error) {
+                commit('setLoading',false)
                 console.log("errorCode:" + error.code)
                 console.log("errorMSG:" + error.message)
                 self.dispatch('widget/SetModalMsg',{enabled:true, title:"Error", body:"登録に失敗しました。\n" + error.code + "\n" + error.message})
@@ -200,9 +219,11 @@ export default new Vuex.Store({
       // 画像なし
       db.collection("PhotoLog").doc(user.uid).collection("Log").doc().set(args.insObj)
       .then(function (docRef) {
+        commit('setLoading',false)
         self.dispatch('widget/SetModalMsg',{enabled:true, title:"Info", body:"登録しました。"})
       })
       .catch(function (error) {
+        commit('setLoading',false)
         console.log("errorCode:" + error.code)
         console.log("errorMSG:" + error.message)
         self.dispatch('widget/SetModalMsg',{enabled:true, title:"Error", body:"登録に失敗しました。\n" + error.code + "\n" + error.message})
