@@ -37,11 +37,19 @@ export default {
 
     computed:{
         showAsFull : {
-        get()
-        {
-            return this.$store.getters.ShowAsFull
+            get()
+            {
+                return this.$store.getters.ShowAsFull
+            }
+        },
+
+        showRefUrl : {
+            get()
+            {
+                return this.$store.getters.ShowRefUrl
+            }
         }
-        }
+
     },
 
     mounted:async function(){
@@ -54,7 +62,7 @@ export default {
         //  地図描画
         this.initMap()
 
-        this.mapUrl = location.href + "?mode=1"
+        this.mapUrl = location.href + "?mode=1&refurl=1"
     },
 
     methods:{
@@ -75,7 +83,7 @@ export default {
 
                 let contentHtml = "<div style='padding: 5px 10px 10px 10px; display:block;'><p style='color:#555555; font-size:150%; font-weight:400; margin-bottom:8px;'>" + this.$store.getters.PosMarkers[i].name + "</p>"
                 contentHtml = contentHtml + "<p style='color:#555555; margin-bottom:8px;'>" + this.$store.getters.PosMarkers[i].desc + "</p>"
-                if(this.$store.getters.PosMarkers[i].refurl != null && this.$store.getters.PosMarkers[i].refurl != "")
+                if(this.$store.getters.PosMarkers[i].refurl != null && this.$store.getters.PosMarkers[i].refurl != "" && this.showRefUrl)
                 {
                     contentHtml = contentHtml + "<p style='margin-bottom:8px;'><a href='" + this.$store.getters.PosMarkers[i].refurl +  "' target='_blank' style='color:#555555;'>関連記事</a></p>"
                 }
