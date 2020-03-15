@@ -13,7 +13,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     displayControl:{
-      showAsFull : null
+      showAsFull : null,
+      showRefUrl : null
     },
 
     // poslMakers
@@ -27,6 +28,11 @@ export default new Vuex.Store({
     ShowAsFull(state)
     {
       return state.displayControl.showAsFull
+    },
+
+    ShowRefUrl(state)
+    {
+      return state.displayControl.showRefUrl
     },
 
     PosMarkers(state)
@@ -44,6 +50,11 @@ export default new Vuex.Store({
     setShowAsFull(state,payload)
     {
       state.displayControl.showAsFull = payload
+    },
+
+    setShowRefUrl(state,payload)
+    {
+      state.displayControl.showRefUrl = payload
     },
 
     setPosMarkers(state, payload)
@@ -142,13 +153,52 @@ export default new Vuex.Store({
     //---------------------------
     // InsertPos
     //---------------------------    
-    async InsertPos({commit}, posObj)
+    async InsertPos({commit}, args)
     {
       let user = this.getters['firebaseCommon/userInfo']
       let db = firebase.firestore()
       let self = this
       
-      db.collection("PhotoLog").doc(user.uid).collection("Log").doc().set(posObj)
+      // 画像あり
+      if(args.insImg != null)
+      {
+        // ファイルアップロード
+        let uploads = [];
+        let reg = /(.*)(?:\.([^.]+$))/
+        let date = new Date()
+        let fileName = args.insImg.name.match(reg)[1]
+        let suffix   = args.insImg.name.match(reg)[2]
+        fileName = fileName + "_" + date.getTime() + "." + suffix
+
+        let storageRef = firebase.storage().ref('photolog/' + user.uid + '/' + fileName);
+        uploads.push(storageRef.put(args.insImg));
+
+        Promise.all(uploads).then(function () {
+          let pathReference = firebase.storage().ref('photolog/' + user.uid + '/' + fileName);
+
+          pathReference.getDownloadURL().then(function(url) {
+              console.log(url)
+
+              args.insObj.photo = url
+
+              // DB登録
+              db.collection("PhotoLog").doc(user.uid).collection("Log").doc().set(args.insObj)
+              .then(function (docRef) {
+                self.dispatch('widget/SetModalMsg',{enabled:true, title:"Info", body:"登録しました。"})
+              })
+              .catch(function (error) {
+                console.log("errorCode:" + error.code)
+                console.log("errorMSG:" + error.message)
+                self.dispatch('widget/SetModalMsg',{enabled:true, title:"Error", body:"登録に失敗しました。\n" + error.code + "\n" + error.message})
+              });
+          })
+        })
+
+        return
+      }
+
+      // 画像なし
+      db.collection("PhotoLog").doc(user.uid).collection("Log").doc().set(args.insObj)
       .then(function (docRef) {
         self.dispatch('widget/SetModalMsg',{enabled:true, title:"Info", body:"登録しました。"})
       })
