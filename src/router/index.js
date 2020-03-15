@@ -45,12 +45,20 @@ const router = new Router({
 router.beforeEach((to, from, next)=> async function(){
     if(to.query["mode"]==1)
     {
-        console.log("full screen mode")
         store.commit('setShowAsFull', true)
     }
     else
     {
         store.commit('setShowAsFull', false)
+    }
+
+    if(to.query["refurl"]==1)
+    {
+      store.commit('setShowRefUrl', true)
+    }
+    else
+    {
+      store.commit('setShowRefUrl', false)
     }
 
     next()

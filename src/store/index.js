@@ -13,7 +13,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     displayControl:{
-      showAsFull : null
+      showAsFull : null,
+      showRefUrl : null
     },
 
     // poslMakers
@@ -27,6 +28,11 @@ export default new Vuex.Store({
     ShowAsFull(state)
     {
       return state.displayControl.showAsFull
+    },
+
+    ShowRefUrl(state)
+    {
+      return state.displayControl.showRefUrl
     },
 
     PosMarkers(state)
@@ -44,6 +50,11 @@ export default new Vuex.Store({
     setShowAsFull(state,payload)
     {
       state.displayControl.showAsFull = payload
+    },
+
+    setShowRefUrl(state,payload)
+    {
+      state.displayControl.showRefUrl = payload
     },
 
     setPosMarkers(state, payload)
