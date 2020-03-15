@@ -1,6 +1,6 @@
 <template>
     <section>
-        <h2>Register New PhotoLog Entry</h2>
+        <h2>新規登録</h2>
 
         <div style="margin-bottom:40px;">
             <div style="margin-left:10px;">
@@ -30,11 +30,14 @@
                     color="blue-grey lighten-1"
                     v-model="desc"
                 ></v-textarea>
-                <v-text-field
+
+                <v-file-input multiple label="添付画像" v-on:change="selectFile" v-model="imgFile"></v-file-input>
+
+                <!-- <v-text-field
                     label="画像URL"
                     color="blue-grey lighten-1"
                     v-model="photo"
-                ></v-text-field>
+                ></v-text-field> -->
                 <v-text-field
                     label="関連記事URL"
                     color="blue-grey lighten-1"
@@ -59,6 +62,7 @@ export default {
         photo : "",
         desc:"",
         refurl:"",
+        imgFile : null,
 
         showMap : false
     }),
@@ -124,7 +128,14 @@ export default {
                     }
             }
 
-            await this.$store.dispatch('InsertPos', insObj)
+            let insArgs = {}
+            insArgs["insObj"] = insObj
+            if(this.imgFile != null)
+            {
+                insArgs["insImg"] = this.imgFile[0]
+            }
+            
+            await this.$store.dispatch('InsertPos', insArgs)
 
             this.name = ""
             this.desc = ""
@@ -132,6 +143,11 @@ export default {
             this.refurl = ""
             this.posInput = ""
             this.showMap = false
+            this.imgFile = null
+        },
+
+        selectFile()
+        {
 
         }
     }
