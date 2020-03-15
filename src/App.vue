@@ -111,17 +111,21 @@
       </v-card>
     </v-dialog>
 
+    <Loading v-if="this.loading" />
+
   </v-app>
 </template>
 
 <script>
 import HelloWorld from './components/HelloWorld';
+import Loading    from './components/widgets/loading'
 
 export default {
   name: 'App',
 
   components: {
     HelloWorld,
+    Loading
   },
 
   computed:{
@@ -147,6 +151,13 @@ export default {
       get()
       {
         return this.$store.getters['widget/ModalDialog']
+      }
+    },
+
+    loading:{
+      get()
+      {
+        return this.$store.getters.Loading
       }
     },
 
