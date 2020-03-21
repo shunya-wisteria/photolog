@@ -8,7 +8,11 @@
                     <img v-bind:src="pos.photo" width="100%" v-if="pos.photo != null">
                 </v-col>
                 <v-col cols=8>
-                    <h3>{{ pos.name }}</h3>
+                    <h3>
+                        <router-link v-bind:to="'/detail/'+pos.id">
+                            {{ pos.name }}
+                        </router-link>
+                    </h3>
                     <p v-html="pos.desc" />
                 </v-col>
             </v-row>
