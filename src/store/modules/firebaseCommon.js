@@ -83,8 +83,6 @@ export const firebaseCommon = {
                 if (user) {                    
                     commit('setUserInfo', user)
                     commit('setLoginState',{logined:true})
-                } else {
-                    return
                 }
             });
         }
