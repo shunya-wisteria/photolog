@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <!-- <v-row class="text-center">
+    <v-row class="text-center" v-if="!logined">
 
       <v-col class="mb-4">
         <h1 class="display-2 font-weight-bold mb-3">
@@ -10,9 +10,11 @@
           
         </p>
       </v-col>
-    </v-row> -->
+    </v-row>
 
-  <ListView />
+  <ListView 
+    v-if="logined"
+  />
   </v-container>
 </template>
 
@@ -24,6 +26,14 @@
 
     components:{
       ListView
+    },
+
+    computed:{
+      logined :{
+        get(){
+          return this.$store.getters['firebaseCommon/loginState'].logined
+        }
+      }
     },
 
     data: () => ({

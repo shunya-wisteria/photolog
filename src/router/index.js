@@ -5,6 +5,7 @@ import Home         from '@/components/Home.vue'
 import PhotoMap     from '@/components/PhotoMap.vue'
 import Login        from '@/components/Login.vue'
 import Insert       from '@/components/Insert.vue'
+import Edit         from '@/components/Edit.vue'
 import Migrate      from '@/components/Migrate.vue'
 import { migrate } from '../store/modules/migrate'
 
@@ -30,9 +31,14 @@ const router = new Router({
         component: Login
       },
       {
-          path: '/insert',
-          name: 'insert',
-          component: Insert
+        path: '/insert',
+        name: 'insert',
+        component: Insert
+      },
+      {
+        path: '/detail/:id',
+        name: 'detail',
+        component: Edit 
       }
 
       // {

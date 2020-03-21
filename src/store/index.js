@@ -20,6 +20,7 @@ export default new Vuex.Store({
 
     // poslMakers
     posMarkers : [],
+    posData : {},
 
     // pos search
     posSearch : {}
@@ -44,6 +45,11 @@ export default new Vuex.Store({
     PosMarkers(state)
     {
       return state.posMarkers
+    },
+
+    PosData(state)
+    {
+      return state.posData
     },
 
     PosSearch(state)
@@ -73,6 +79,11 @@ export default new Vuex.Store({
       state.posMarkers = payload
     },
 
+    setPosData(state, payload)
+    {
+      state.posData = payload
+    },
+
     setPosSearch(state,payload)
     {
       state.posSearch = payload
@@ -89,7 +100,6 @@ export default new Vuex.Store({
     //---------------------------
     async GetPosData({commit}, uid)
     {
-      console.log("call firebase")
       commit('setLoading',true)
 
       let posMarkers = []
@@ -161,6 +171,30 @@ export default new Vuex.Store({
       });
     },
 
+    //---------------------------
+    // Read Single PosData from Firebase
+    //---------------------------
+    async GetPosDataSingle({commit}, id)
+    {
+      let self = this
+      firebase.auth().onAuthStateChanged(async function(user) {
+        if (user) {
+          
+          commit('setLoading',true)
+          let db = firebase.firestore()
+          let posData = await(await (db.collection("PhotoLog").doc(user.uid).collection("Log").doc(id).get())).data()
+
+          commit('setPosData', posData)
+
+          commit('setLoading', false)
+        }
+      });
+    },
+
+    SetPosData({commit},value)
+    {
+      commit('setPosData', value)
+    },
 
     //---------------------------
     // Search Pos
