@@ -1,24 +1,40 @@
 <template>
   <v-container>
-    <v-row class="text-center">
+    <v-row class="text-center" v-if="!logined">
 
       <v-col class="mb-4">
         <h1 class="display-2 font-weight-bold mb-3">
           Welcome to PhotoLog
         </h1>
-
         <p class="subheading font-weight-regular">
           
         </p>
       </v-col>
     </v-row>
 
+  <ListView 
+    v-if="logined"
+  />
   </v-container>
 </template>
 
 <script>
+  import ListView from './List';
+
   export default {
-    name: 'HelloWorld',
+    name: 'Home',
+
+    components:{
+      ListView
+    },
+
+    computed:{
+      logined :{
+        get(){
+          return this.$store.getters['firebaseCommon/loginState'].logined
+        }
+      }
+    },
 
     data: () => ({
       ecosystem: [
