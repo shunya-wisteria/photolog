@@ -34,7 +34,8 @@
                 ></v-text-field>
             </v-form>
 
-            <!-- <v-btn block color="primary" v-on:click="toInsert">登録</v-btn> -->
+            <v-btn block color="primary" v-on:click="toUpdate">更新</v-btn>
+            <v-btn block color="primary" v-on:click="toDelete" style="margin-top:10px;">削除</v-btn>
         </div>
 
 
@@ -46,10 +47,6 @@ export default {
     name : "Edit",
 
     data: () => ({
-        name : "",
-        photo : "",
-        desc:"",
-        refurl:"",
         imgFile : null,
     }),   
 
@@ -70,6 +67,40 @@ export default {
         let id = this.$route.params.id
 
         await this.$store.dispatch('GetPosDataSingle', id)
+    },
+
+    methods:{
+        async toUpdate()
+        {
+            // 必須チェック
+            if(this.posData.name == "")
+            {
+                this.$store.dispatch('widget/SetModalMsg',{enabled:true, title:"Info", body:"名称を入力してください。"})
+                return   
+            }
+
+            let dt = new Date()
+            this.posData["updated-at"] = dt
+            if(this.posData["created-at"] == null)
+            {
+                this.posData["created-at"] = new Date('00000000')
+            }
+
+
+            if(this.imgFile != null)
+            {
+                this.posData["img"] = this.imgFile[0]
+            }
+
+            await this.$store.dispatch('UpdatePos', this.posData)
+
+            this.posData["img"] = null
+        },
+        async toDelete()
+        {
+
+        }
+
     }
 
 }

@@ -184,6 +184,8 @@ export default new Vuex.Store({
           let db = firebase.firestore()
           let posData = await(await (db.collection("PhotoLog").doc(user.uid).collection("Log").doc(id).get())).data()
 
+          posData["id"] = id
+
           commit('setPosData', posData)
 
           commit('setLoading', false)
@@ -249,8 +251,6 @@ export default new Vuex.Store({
           let pathReference = firebase.storage().ref('photolog/' + user.uid + '/' + fileName);
 
           pathReference.getDownloadURL().then(function(url) {
-              console.log(url)
-
               args.insObj.photo = url
 
               // DB登録
@@ -284,8 +284,96 @@ export default new Vuex.Store({
         self.dispatch('widget/SetModalMsg',{enabled:true, title:"Error", body:"登録に失敗しました。\n" + error.code + "\n" + error.message})
       });
 
-    }
+    },
 
+    //---------------------------
+    // UpdatePos
+    //---------------------------    
+    async UpdatePos({commit}, args)
+    {
+      commit('setLoading',true)
+
+      let user = this.getters['firebaseCommon/userInfo']
+      let db = firebase.firestore()
+      let self = this
+
+      // 画像あり
+      if(args.img != null)
+      {
+        // ファイルアップロード
+        let uploads = [];
+        let reg = /(.*)(?:\.([^.]+$))/
+        let date = new Date()
+        let fileName = args.img.name.match(reg)[1]
+        let suffix   = args.img.name.match(reg)[2]
+        fileName = fileName + "_" + date.getTime() + "." + suffix
+
+        let storageRef = firebase.storage().ref('photolog/' + user.uid + '/' + fileName);
+        uploads.push(storageRef.put(args.img));
+
+        Promise.all(uploads).then(function () {
+          let pathReference = firebase.storage().ref('photolog/' + user.uid + '/' + fileName);
+
+          pathReference.getDownloadURL().then(function(url) {
+            args.photo = url
+
+            // DB更新
+            db.collection("PhotoLog").doc(user.uid).collection("Log").doc(args.id).set(
+              {
+                name : args.name,
+                desc : args.desc,
+                refurl: args.refurl,
+                photo: args.photo,
+                pos:{
+                  _lat : args.pos._lat,
+                  _long: args.pos._long
+                },
+                'created-at' : args['created-at'],
+                'updated-at' : args['updated-at']
+              }
+            )
+            .then(function(docRef){
+              commit('setLoading',false)
+              self.dispatch('widget/SetModalMsg',{enabled:true, title:"Info", body:"更新しました。"})
+            })
+            .catch(function (error) {
+              commit('setLoading',false)
+              console.log("errorCode:" + error.code)
+              console.log("errorMSG:" + error.message)
+              self.dispatch('widget/SetModalMsg',{enabled:true, title:"Error", body:"更新に失敗しました。\n" + error.code + "\n" + error.message})
+            });
+          })
+        })
+
+        return
+      }
+
+      // DB更新
+      db.collection("PhotoLog").doc(user.uid).collection("Log").doc(args.id).set(
+        {
+          name : args.name,
+          desc : args.desc,
+          refurl: args.refurl,
+          photo: args.photo,
+          pos:{
+            _lat : args.pos._lat,
+            _long: args.pos._long
+          },
+          'created-at' : args['created-at'],
+          'updated-at' : args['updated-at']
+        }
+      )
+      .then(function(docRef){
+        commit('setLoading',false)
+        self.dispatch('widget/SetModalMsg',{enabled:true, title:"Info", body:"更新しました。"})
+      })
+      .catch(function (error) {
+        commit('setLoading',false)
+        console.log("errorCode:" + error.code)
+        console.log("errorMSG:" + error.message)
+        self.dispatch('widget/SetModalMsg',{enabled:true, title:"Error", body:"更新に失敗しました。\n" + error.code + "\n" + error.message})
+      });
+    }
 
   },
   modules: {
