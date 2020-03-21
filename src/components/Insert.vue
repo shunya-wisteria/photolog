@@ -117,6 +117,8 @@ export default {
                 return
             }
 
+            let dt = new Date()
+
             let insObj = {
                 name    : this.name,
                 desc    : this.desc,
@@ -125,7 +127,9 @@ export default {
                 pos : {
                         _lat : this.pos.lat,
                         _long : this.pos.lng
-                    }
+                    },
+                'created-at' : dt,
+                'updated-at' : dt
             }
 
             let insArgs = {}

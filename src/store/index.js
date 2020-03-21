@@ -89,7 +89,7 @@ export default new Vuex.Store({
     //---------------------------
     async GetPosData({commit}, uid)
     {
-      
+      console.log("call firebase")
       commit('setLoading',true)
 
       let posMarkers = []
@@ -100,12 +100,12 @@ export default new Vuex.Store({
         let posRec = posData.data()
 
         // format datetime
-        let cyear
-        let cmonth
-        let cday
-        let uyear
-        let umonth
-        let uday
+        let cyear   = '0000'
+        let cmonth  = '00'
+        let cday    = '00'
+        let uyear   = '0000'
+        let umonth  = '00'
+        let uday    = '00'
 
         if(posRec["created-at"] != null)
         {
@@ -124,6 +124,7 @@ export default new Vuex.Store({
         }
 
         let posMarker = {}
+        posMarker["id"]    = posData.id
         posMarker["name"]  = posRec.name
         posMarker["desc"]  = posRec.desc
         posMarker["lat"]   = posRec.pos._lat
@@ -137,9 +138,29 @@ export default new Vuex.Store({
         posMarkers.push(posMarker)
       })
 
+      posMarkers.sort(function(a,b){
+        if(a["created-at"] > b["created-at"]) return -1
+        if(a["created-at"] < b["created-at"]) return 1
+        return 0;
+      })
+
       commit('setPosMarkers',posMarkers)
       commit('setLoading',false)
     },
+
+    //---------------------------
+    // Read Own PosData from Firebase
+    //---------------------------
+    async GetMyPosData({commit})
+    {
+      let self = this
+      firebase.auth().onAuthStateChanged(async function(user) {
+        if (user) {
+          self.dispatch('GetPosData', user.uid)
+        }
+      });
+    },
+
 
     //---------------------------
     // Search Pos

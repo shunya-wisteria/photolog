@@ -1,24 +1,30 @@
 <template>
   <v-container>
-    <v-row class="text-center">
+    <!-- <v-row class="text-center">
 
       <v-col class="mb-4">
         <h1 class="display-2 font-weight-bold mb-3">
           Welcome to PhotoLog
         </h1>
-
         <p class="subheading font-weight-regular">
           
         </p>
       </v-col>
-    </v-row>
+    </v-row> -->
 
+  <ListView />
   </v-container>
 </template>
 
 <script>
+  import ListView from './List';
+
   export default {
-    name: 'HelloWorld',
+    name: 'Home',
+
+    components:{
+      ListView
+    },
 
     data: () => ({
       ecosystem: [
