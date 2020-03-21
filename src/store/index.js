@@ -373,6 +373,32 @@ export default new Vuex.Store({
         console.log("errorMSG:" + error.message)
         self.dispatch('widget/SetModalMsg',{enabled:true, title:"Error", body:"更新に失敗しました。\n" + error.code + "\n" + error.message})
       });
+    },
+
+    //---------------------------
+    // DeletePos
+    //---------------------------   
+    async DeletePos({commit}, id)
+    {
+      commit('setLoading',true)
+
+      let user = this.getters['firebaseCommon/userInfo']
+      let db = firebase.firestore()
+      let self = this
+
+      db.collection("PhotoLog").doc(user.uid).collection("Log").doc(id).delete()
+      .then(function(docRef){
+        commit('setLoading',false)
+        router.push({name : 'home'})
+        self.dispatch('widget/SetModalMsg',{enabled:true, title:"Info", body:"削除しました。"})
+      })
+      .catch(function (error) {
+        commit('setLoading',false)
+        console.log("errorCode:" + error.code)
+        console.log("errorMSG:" + error.message)
+        self.dispatch('widget/SetModalMsg',{enabled:true, title:"Error", body:"削除に失敗しました。\n" + error.code + "\n" + error.message})
+      });
+
     }
 
   },
