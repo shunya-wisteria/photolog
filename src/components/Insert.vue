@@ -11,7 +11,7 @@
                     v-on:keyup.enter="toSearch"
                 ></v-text-field>
             </div>
-            <v-btn block color="primary" v-on:click="toSearch">検索</v-btn>
+            <v-btn block color="secondary" v-on:click="toSearch">検索</v-btn>
 
             <div id='map' style="width:100%; height:300px;margin-top:30px;" v-show="showMap"></div>
         </div>
@@ -45,7 +45,7 @@
                 ></v-text-field>
             </v-form>
 
-            <v-btn block color="primary" v-on:click="toInsert">登録</v-btn>
+            <v-btn block color="secondary" v-on:click="toInsert">登録</v-btn>
         </div>
 
     </section>

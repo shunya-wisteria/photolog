@@ -34,8 +34,8 @@
                 ></v-text-field>
             </v-form>
 
-            <v-btn block color="primary" v-on:click="toUpdate">更新</v-btn>
-            <v-btn block color="primary" v-on:click="toDelete" style="margin-top:10px;">削除</v-btn>
+            <v-btn block color="secondary" v-on:click="toUpdate">更新</v-btn>
+            <v-btn block color="secondary" v-on:click="toDelete" style="margin-top:10px;">削除</v-btn>
         </div>
 
 
