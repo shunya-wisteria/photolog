@@ -98,7 +98,7 @@ export default {
         },
         async toDelete()
         {
-
+            await this.$store.dispatch('DeletePos', this.posData.id)
         }
 
     }
