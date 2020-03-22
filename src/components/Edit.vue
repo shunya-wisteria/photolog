@@ -1,8 +1,8 @@
 <template>
     <section>
         <h2>{{posData.name}}</h2>
+        <h3>Photo</h3>
         <v-container>
-            <h3>Photo</h3>
             <v-row>
                 <v-col cols=12>
                     <img v-bind:src="posData.photo" v-if="posData.photo != null" width="100%">

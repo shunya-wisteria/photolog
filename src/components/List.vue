@@ -5,7 +5,9 @@
         <v-container>
             <v-row v-for="(pos, index) in PagePos" :key="index">
                 <v-col cols=4>
-                    <img v-bind:src="pos.photo" width="100%" v-if="pos.photo != null">
+                    <router-link v-bind:to="'/detail/'+pos.id" v-if="pos.photo != null">
+                        <img v-bind:src="pos.photo" width="100%" v-if="pos.photo != null">
+                    </router-link>
                 </v-col>
                 <v-col cols=8>
                     <h3>
