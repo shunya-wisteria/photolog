@@ -2,26 +2,56 @@
   <v-app>
     <v-app-bar
       app
-      color="primary"
-      dark
+      color="white"
+      light
       v-if="!showAsFull"
+      height="80"
     >
-      <div class="d-flex align-center">
+      <!-- <div class="d-flex align-center">
         <v-app-bar-nav-icon 
           @click="drawer=true" 
           v-if="menu"
           style="margin-right: 5px;"
         ></v-app-bar-nav-icon>
         <h1 style="font-weight:300;font-size:160%;">PhotoLog</h1>
-      </div>
+      </div> -->
+
+      <v-container style="margin-top:30px; margin-left:-10px;" v-if="showSearch">
+        <v-row justify="center" align-content="center">
+          <v-col cols=2>
+            <v-app-bar-nav-icon 
+              @click="drawer=true" 
+              v-if="menu"
+            ></v-app-bar-nav-icon>
+
+          </v-col>
+          <v-col cols=10>
+            <v-text-field
+              filled
+              label="Search Pos"
+              solo
+              v-model="posInput"
+              v-on:keyup.enter="toSearch"
+            ></v-text-field>
+          </v-col>
+        </v-row>
+      </v-container>
+      <v-container style="margin-left:-10px;" v-if="!showSearch">
+        <v-row justify="center" align-content="center">
+          <v-col cols=2>
+            <v-app-bar-nav-icon 
+              @click="drawer=true" 
+              v-if="menu"
+            ></v-app-bar-nav-icon>
+          </v-col>
+          <v-col cols=10 />
+        </v-row>
+      </v-container>
+
 
       <v-spacer></v-spacer>
 
     </v-app-bar>
-
-    <!-- <v-content>
-      <router-view />
-    </v-content> -->
 
     <v-content style="background-color:#F5F5F5">
       <v-container style="margin-top:10px;">
@@ -136,6 +166,13 @@ export default {
       }
     },
 
+    showSearch : {
+      get()
+      {
+        return this.$store.getters.ShowSearch
+      }
+    },
+
     loginState:{
       get()
       {
@@ -176,9 +213,7 @@ export default {
   data: () => ({
     menu : true,
     drawer : false,
-    // userInfo:{
-    //   photoURL : ""
-    // }
+    posInput : ""
   }),
 
   methods:{
@@ -189,6 +224,24 @@ export default {
     toLink()
     {
 
+    },
+
+    async toSearch()
+    {
+      if(this.posInput == "")
+      {
+          this.$store.dispatch('widget/SetModalMsg',{enabled:true, title:"Info", body:"場所名を入力してください。"})
+          return
+      }
+      if(!this.loginState.logined)
+      {
+        this.$store.dispatch('widget/SetModalMsg',{enabled:true, title:"Info", body:"ログインしてください。"})
+        return
+      }
+
+      await this.$store.dispatch('SearchPos', this.posInput)
+      this.posInput = ""
+      this.$router.push({name : 'insert'})
     }
   }
 
