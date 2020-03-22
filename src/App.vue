@@ -6,15 +6,6 @@
       light
       v-if="!showAsFull"
     >
-      <!-- <div class="d-flex align-center">
-        <v-app-bar-nav-icon 
-          @click="drawer=true" 
-          v-if="menu"
-          style="margin-right: 5px;"
-        ></v-app-bar-nav-icon>
-        <h1 style="font-weight:300;font-size:160%;">PhotoLog</h1>
-      </div> -->
-
       <v-container style="margin-top:20px; margin-left:-10px;" v-if="showSearch">
         <v-row justify="center" align-content="center">
           <v-col cols=2>
@@ -29,9 +20,10 @@
               filled
               label="Search Pos"
               solo
-              dense="true"
+              dense
               v-model="posInput"
               v-on:keyup.enter="toSearch"
+              style="margin-top:5px;"
             ></v-text-field>
           </v-col>
         </v-row>
