@@ -76,6 +76,23 @@ export default {
         }
     },
 
+    mounted(){
+        if(this.pos != null)
+        {
+            // initMap
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 15,
+                center: this.pos
+            })
+            var maker =  new google.maps.Marker({
+                position: this.pos,
+                map: map
+            });
+
+            this.showMap = true   
+        }
+    },
+
     methods:{
         async toSearch()
         {

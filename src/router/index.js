@@ -49,6 +49,16 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next)=> async function(){
+    if(to.name != 'insert')
+    {
+      store.commit('setPosSearch', null)
+      store.commit('setShowSearch', true)
+    }
+    else
+    {
+      store.commit('setShowSearch', false)
+    }
+
     if(to.query["mode"]==1)
     {
         store.commit('setShowAsFull', true)
