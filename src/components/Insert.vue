@@ -33,11 +33,6 @@
 
                 <v-file-input multiple label="添付画像" v-on:change="selectFile" v-model="imgFile"></v-file-input>
 
-                <!-- <v-text-field
-                    label="画像URL"
-                    color="blue-grey lighten-1"
-                    v-model="photo"
-                ></v-text-field> -->
                 <v-text-field
                     label="関連記事URL"
                     color="blue-grey lighten-1"
@@ -121,7 +116,7 @@ export default {
         async toInsert()
         {
             // check pos
-            if(this.pos.lat == null)
+            if(this.pos == null || this.pos.lat == null)
             {
                 this.$store.dispatch('widget/SetModalMsg',{enabled:true, title:"Info", body:"場所の指定が不正です。"})
                 return
