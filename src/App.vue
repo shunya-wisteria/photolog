@@ -24,6 +24,7 @@
               v-model="posInput"
               v-on:keyup.enter="toSearch"
               @focus="toFocusSearch"
+              v-on:keyup="toUpdate"
               style="margin-top:5px;"
             ></v-text-field>
           </v-col>
@@ -38,7 +39,9 @@
       <v-container style="margin-top:10px;">
         <v-row align="center" justify="center">
           <v-col cols=12>
-            <router-view />
+            <transition name="fade">
+              <router-view />
+            </transition>
           </v-col>
         </v-row>
       </v-container>
@@ -146,7 +149,7 @@ export default {
         return this.$store.getters.ShowAsFull
       }
     },
-    
+
     loginState:{
       get()
       {
@@ -220,7 +223,15 @@ export default {
 
     toFocusSearch()
     {
-      if(this.$route.path == "/insert")
+      if(this.$route.path != "/search")
+      {
+        this.$router.push({name : 'search'})
+      }
+    },
+    toUpdate()
+    {
+      console.log("update")
+      if(this.$route.path != "/search")
       {
         this.$router.push({name : 'search'})
       }
@@ -245,5 +256,12 @@ export default {
   h3{
     font-weight: 400;
   }
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to{
+  opacity: 0;
+}
 
 </style>
