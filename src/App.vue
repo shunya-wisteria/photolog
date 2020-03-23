@@ -225,14 +225,15 @@ export default {
     {
       if(this.$route.path != "/search")
       {
+        this.$store.dispatch('SetBeforeSearch', this.$route.path)
         this.$router.push({name : 'search'})
       }
     },
     toUpdate()
     {
-      console.log("update")
       if(this.$route.path != "/search")
       {
+        this.$store.dispatch('SetBeforeSearch', this.$route.path)
         this.$router.push({name : 'search'})
       }
     }
