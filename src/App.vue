@@ -29,18 +29,6 @@
           </v-col>
         </v-row>
       </v-container>
-      <!-- <v-container style="margin-left:-10px;" v-if="!showSearch">
-        <v-row justify="center" align-content="center">
-          <v-col cols=2>
-            <v-app-bar-nav-icon 
-              @click="drawer=true" 
-              v-if="menu"
-            ></v-app-bar-nav-icon>
-          </v-col>
-          <v-col cols=10 />
-        </v-row>
-      </v-container> -->
-
 
       <v-spacer></v-spacer>
 
@@ -158,14 +146,7 @@ export default {
         return this.$store.getters.ShowAsFull
       }
     },
-
-    showSearch : {
-      get()
-      {
-        return this.$store.getters.ShowSearch
-      }
-    },
-
+    
     loginState:{
       get()
       {

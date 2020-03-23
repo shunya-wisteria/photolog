@@ -15,8 +15,7 @@ export default new Vuex.Store({
     displayControl:{
       showAsFull : null,
       showRefUrl : null,
-      loading    : false,
-      showSearch : true
+      loading    : false
     },
 
     // poslMakers
@@ -36,11 +35,6 @@ export default new Vuex.Store({
     ShowRefUrl(state)
     {
       return state.displayControl.showRefUrl
-    },
-
-    ShowSearch(state)
-    {
-      return state.displayControl.showSearch
     },
 
     Loading(state)
@@ -73,11 +67,6 @@ export default new Vuex.Store({
     setShowRefUrl(state,payload)
     {
       state.displayControl.showRefUrl = payload
-    },
-    
-    setShowSearch(state, payload)
-    {
-      state.displayControl.showSearch = payload
     },
 
     setLoading(state,payload)
