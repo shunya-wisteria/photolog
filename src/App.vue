@@ -6,7 +6,7 @@
       light
       v-if="!showAsFull"
     >
-      <v-container style="margin-top:20px; margin-left:-10px;" v-if="showSearch">
+      <v-container style="margin-top:20px; margin-left:-10px;">
         <v-row justify="center" align-content="center">
           <v-col cols=2>
             <v-app-bar-nav-icon 
@@ -23,12 +23,13 @@
               dense
               v-model="posInput"
               v-on:keyup.enter="toSearch"
+              @focus="toFocusSearch"
               style="margin-top:5px;"
             ></v-text-field>
           </v-col>
         </v-row>
       </v-container>
-      <v-container style="margin-left:-10px;" v-if="!showSearch">
+      <!-- <v-container style="margin-left:-10px;" v-if="!showSearch">
         <v-row justify="center" align-content="center">
           <v-col cols=2>
             <v-app-bar-nav-icon 
@@ -38,7 +39,7 @@
           </v-col>
           <v-col cols=10 />
         </v-row>
-      </v-container>
+      </v-container> -->
 
 
       <v-spacer></v-spacer>
@@ -234,6 +235,14 @@ export default {
       await this.$store.dispatch('SearchPos', this.posInput)
       this.posInput = ""
       this.$router.push({name : 'insert'})
+    },
+
+    toFocusSearch()
+    {
+      if(this.$route.path == "/insert")
+      {
+        this.$router.push({name : 'search'})
+      }
     }
   }
 
