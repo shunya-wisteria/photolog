@@ -6,7 +6,7 @@
       light
       v-if="!showAsFull"
     >
-      <v-container style="margin-top:20px; margin-left:-10px;" v-if="showSearch">
+      <v-container style="margin-top:20px; margin-left:-10px;">
         <v-row justify="center" align-content="center">
           <v-col cols=2>
             <v-app-bar-nav-icon 
@@ -23,23 +23,13 @@
               dense
               v-model="posInput"
               v-on:keyup.enter="toSearch"
+              @focus="toFocusSearch"
+              v-on:keyup="toUpdate"
               style="margin-top:5px;"
             ></v-text-field>
           </v-col>
         </v-row>
       </v-container>
-      <v-container style="margin-left:-10px;" v-if="!showSearch">
-        <v-row justify="center" align-content="center">
-          <v-col cols=2>
-            <v-app-bar-nav-icon 
-              @click="drawer=true" 
-              v-if="menu"
-            ></v-app-bar-nav-icon>
-          </v-col>
-          <v-col cols=10 />
-        </v-row>
-      </v-container>
-
 
       <v-spacer></v-spacer>
 
@@ -49,7 +39,9 @@
       <v-container style="margin-top:10px;">
         <v-row align="center" justify="center">
           <v-col cols=12>
-            <router-view />
+            <transition name="fade">
+              <router-view />
+            </transition>
           </v-col>
         </v-row>
       </v-container>
@@ -158,13 +150,6 @@ export default {
       }
     },
 
-    showSearch : {
-      get()
-      {
-        return this.$store.getters.ShowSearch
-      }
-    },
-
     loginState:{
       get()
       {
@@ -234,6 +219,23 @@ export default {
       await this.$store.dispatch('SearchPos', this.posInput)
       this.posInput = ""
       this.$router.push({name : 'insert'})
+    },
+
+    toFocusSearch()
+    {
+      if(this.$route.path != "/search")
+      {
+        this.$store.dispatch('SetBeforeSearch', this.$route.path)
+        this.$router.push({name : 'search'})
+      }
+    },
+    toUpdate()
+    {
+      if(this.$route.path != "/search")
+      {
+        this.$store.dispatch('SetBeforeSearch', this.$route.path)
+        this.$router.push({name : 'search'})
+      }
     }
   }
 
@@ -255,5 +257,12 @@ export default {
   h3{
     font-weight: 400;
   }
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to{
+  opacity: 0;
+}
 
 </style>

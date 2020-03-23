@@ -6,6 +6,7 @@ import PhotoMap     from '@/components/PhotoMap.vue'
 import Login        from '@/components/Login.vue'
 import Insert       from '@/components/Insert.vue'
 import Edit         from '@/components/Edit.vue'
+import Search       from '@/components/Search.vue'
 import Migrate      from '@/components/Migrate.vue'
 import { migrate } from '../store/modules/migrate'
 
@@ -39,6 +40,11 @@ const router = new Router({
         path: '/detail/:id',
         name: 'detail',
         component: Edit 
+      },
+      {
+        path: '/search',
+        name: 'search',
+        component: Search
       }
 
       // {
@@ -49,16 +55,6 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next)=> async function(){
-    if(to.name != 'insert')
-    {
-      store.commit('setPosSearch', null)
-      store.commit('setShowSearch', true)
-    }
-    else
-    {
-      store.commit('setShowSearch', false)
-    }
-
     if(to.query["mode"]==1)
     {
         store.commit('setShowAsFull', true)
