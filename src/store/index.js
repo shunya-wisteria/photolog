@@ -18,6 +18,8 @@ export default new Vuex.Store({
       loading    : false
     },
 
+    beforeSearch : "",
+
     // poslMakers
     posMarkers : [],
     posData : {},
@@ -55,6 +57,11 @@ export default new Vuex.Store({
     PosSearch(state)
     {
       return state.posSearch
+    },
+
+    BeforeSearch(state)
+    {
+      return state.beforeSearch
     }
   },
 
@@ -87,12 +94,22 @@ export default new Vuex.Store({
     setPosSearch(state,payload)
     {
       state.posSearch = payload
+    },
+
+    setBeforeSearch(state, payload)
+    {
+      state.beforeSearch = payload
     }
   },
   actions: {
     SetShowAsFull({commit}, showState)
     {
       commit('setShowAsFull', showState)
+    },
+
+    SetBeforeSearch({commit}, path)
+    {
+      commit('setBeforeSearch', path)
     },
 
     //---------------------------
