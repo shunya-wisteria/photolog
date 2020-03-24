@@ -23,8 +23,9 @@
               dense
               v-model="posInput"
               v-on:keyup.enter="toSearch"
-              @focus="toFocusSearch"
+              v-on:focus="toFocusSearch"
               v-on:keyup="toUpdate"
+              v-on:blur ="toBack"
               style="margin-top:5px;"
             ></v-text-field>
           </v-col>
@@ -180,7 +181,15 @@ export default {
       {
         return this.$store.state.firebaseCommon.userInfo
       }
-    }
+    },
+
+    beforeSearch:
+    {
+        get()
+        {
+            return this.$store.getters.BeforeSearch
+        }
+    } 
   },
 
   mounted: async function(){
@@ -236,7 +245,15 @@ export default {
         this.$store.dispatch('SetBeforeSearch', this.$route.path)
         this.$router.push({name : 'search'})
       }
+    },
+    toBack()
+    {
+        if(this.$route.path == "/search" && this.beforeSearch != null )
+        {
+          this.$router.push(this.beforeSearch)
+        }
     }
+
   }
 
 };
