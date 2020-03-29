@@ -65,8 +65,8 @@ export default {
 
     mounted:async function(){
         let id = this.$route.params.id
-
         await this.$store.dispatch('GetPosDataSingle', id)
+        scrollTo(0, 0);
     },
 
     methods:{
