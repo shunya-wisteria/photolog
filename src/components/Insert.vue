@@ -86,6 +86,7 @@ export default {
 
             this.showMap = true   
         }
+        scrollTo(0, 0);
     },
 
     methods:{
