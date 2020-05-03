@@ -2,7 +2,7 @@
     <section>
         <div v-if="!this.loginState.logined">
             <h2>LogIn</h2>
-            <div>Googleアカウントを利用しログインしてください。</div>
+            <div>{{ $t('message.loginMessage') }}</div>
             <div class="login">
                 <input type="image" src="/googleauth.png" alt="login" style="width:200px;" v-on:click="toLogin">
             </div>

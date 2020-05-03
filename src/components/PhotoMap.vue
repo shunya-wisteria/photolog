@@ -6,7 +6,7 @@
             v-if="!showAsFull"
             style="margin-top:30px;"
         >
-            <p style="margin:0px;">埋込用URL</p>
+            <p style="margin:0px;">{{ $t("message.maplink") }}</p>
             <v-text-field
                 color="blue-grey lighten-1"
                 v-model="mapUrl"
@@ -85,7 +85,7 @@ export default {
                 contentHtml = contentHtml + "<p style='color:#555555; margin-bottom:8px;'>" + this.$store.getters.PosMarkers[i].desc + "</p>"
                 if(this.$store.getters.PosMarkers[i].refurl != null && this.$store.getters.PosMarkers[i].refurl != "" && this.showRefUrl)
                 {
-                    contentHtml = contentHtml + "<p style='margin-bottom:8px;'><a href='" + this.$store.getters.PosMarkers[i].refurl +  "' target='_blank' style='color:#555555;'>関連記事</a></p>"
+                    contentHtml = contentHtml + "<p style='margin-bottom:8px;'><a href='" + this.$store.getters.PosMarkers[i].refurl +  "' target='_blank' style='color:#555555;'>" + this.$t('message.posInfo.refUrl') + "</a></p>"
                 }
                 if(this.$store.getters.PosMarkers[i].photo != null && this.$store.getters.PosMarkers[i].photo != "")
                 {
