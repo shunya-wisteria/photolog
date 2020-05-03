@@ -3,7 +3,7 @@ import App from './App.vue'
 import store from './store'
 import router from './router'
 import vuetify from './plugins/vuetify';
-import VueI18n from 'vue-i18n';
+import i18n from './i18n';
 import firebase from 'firebase/app'
 import 'firebase/app'
 import 'firebase/auth'
@@ -22,14 +22,6 @@ const config = {
 };
 
 firebase.initializeApp(config);
-
-const data = require('./i18n/message.json');
-
-Vue.use(VueI18n);
-const i18n = new VueI18n({
-  locale: process.env.VUE_APP_LOCALE,
-  messages: data
-});
 
 new Vue({
   store,
