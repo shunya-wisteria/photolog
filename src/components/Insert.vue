@@ -1,17 +1,17 @@
 <template>
     <section>
-        <h2>新規登録</h2>
+        <h2>{{ $t('message.entry.insertTitle') }}</h2>
 
         <div style="margin-bottom:40px;">
             <div style="margin-left:10px;">
                 <v-text-field
-                    label="場所名"
+                    v-bind:label="$t('message.entry.searchKeyword')"
                     color="blue-grey lighten-1"
                     v-model="posInput"
                     v-on:keyup.enter="toSearch"
                 ></v-text-field>
             </div>
-            <v-btn block color="secondary" v-on:click="toSearch">検索</v-btn>
+            <v-btn block color="secondary" v-on:click="toSearch">{{ $t('message.entry.searchButton') }}</v-btn>
 
             <div id='map' style="width:100%; height:300px;margin-top:30px;" v-show="showMap"></div>
         </div>
@@ -20,27 +20,27 @@
             <h3>Notes</h3>
             <v-form style="margin-left:10px;">
                 <v-text-field
-                    label="名称"
+                    v-bind:label="$t('message.entry.posName')"
                     required
                     color="blue-grey lighten-1"
                     v-model="name"
                 ></v-text-field>
                 <v-textarea
-                    label="コメント"
+                    v-bind:label="$t('message.entry.posName')"
                     color="blue-grey lighten-1"
                     v-model="desc"
                 ></v-textarea>
 
-                <v-file-input multiple label="添付画像" v-on:change="selectFile" v-model="imgFile"></v-file-input>
+                <v-file-input multiple v-bind:label="$t('message.entry.img')" v-on:change="selectFile" v-model="imgFile"></v-file-input>
 
                 <v-text-field
-                    label="関連記事URL"
+                    v-bind:label="$t('message.entry.refUrl')"
                     color="blue-grey lighten-1"
                     v-model="refurl"
                 ></v-text-field>
             </v-form>
 
-            <v-btn block color="secondary" v-on:click="toInsert">登録</v-btn>
+            <v-btn block color="secondary" v-on:click="toInsert">{{ $t('message.entry.regButton') }}</v-btn>
         </div>
 
     </section>

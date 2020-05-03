@@ -1,0 +1,51 @@
+{
+    "ja": {
+      "message": {
+        "entry":{
+            "insertTitle" : "新規登録",
+            "searchKeyword": "場所名",
+            "posName" : "名称",
+            "posComment" : "コメント",
+            "img" : "添付画像",
+            "refUrl" : "関連記事URL",
+            "updateButton" : "更新",
+            "deleteButton" : "削除",
+            "regButton" : "登録",
+            "searchButton" : "検索"
+        },
+
+        "posInfo":{
+            "refUrl" : "関連記事"
+        },
+
+        "loginMessage" : "Googleアカウントを利用しログインしてください。",
+
+        "maplink": "埋込用URL"
+      }
+    },
+    "en": {
+      "message": {
+        "entry":{
+            "insertTitle" : "Register Pos Entry",
+            "searchKeyword" : "Search Pos",
+            "posName" : "Name",
+            "posComment" : "Comment",
+            "img" : "Attachment Image",
+            "refUrl" : "Reference URL",
+            "updateButton" : "Update",
+            "deleteButton" : "Delete",
+            "regButton" : "Register",
+            "searchButton" : "Search"
+        },
+        
+        "posInfo":{
+            "refUrl" : "Reference Post"
+        },
+
+        "loginMessage" : "Please click button to login this app by your Google Account.",
+
+        "maplink": "Embedded URL"
+      }
+    }
+  }
+  
