@@ -2,6 +2,7 @@ import Vue        from 'vue'
 import Vuex       from 'vuex'
 import router     from '@/router'
 import firebase   from 'firebase'
+import i18n       from '@/i18n';
 
 import {widget}         from './modules/widget'
 import {restcall}       from './modules/restcall'
@@ -235,7 +236,7 @@ export default new Vuex.Store({
       }
       else
       {
-        this.dispatch('widget/SetModalMsg',{enabled:true, title:"Error", body:inputStr + " が見つかりません。"})
+        this.dispatch('widget/SetModalMsg',{enabled:true, title:"Error", body:inputStr + i18n.t('message.infoMsg.posNotFound') })
       }
     },
 
@@ -273,14 +274,14 @@ export default new Vuex.Store({
               // DB登録
               db.collection("PhotoLog").doc(user.uid).collection("Log").doc().set(args.insObj)
               .then(function (docRef) {
-                self.dispatch('widget/SetModalMsg',{enabled:true, title:"Info", body:"登録しました。"})
+                self.dispatch('widget/SetModalMsg',{enabled:true, title:"Info", body:i18n.t('message.infoMsg.compRegister')})
                 commit('setLoading',false)
               })
               .catch(function (error) {
                 commit('setLoading',false)
                 console.log("errorCode:" + error.code)
                 console.log("errorMSG:" + error.message)
-                self.dispatch('widget/SetModalMsg',{enabled:true, title:"Error", body:"登録に失敗しました。\n" + error.code + "\n" + error.message})
+                self.dispatch('widget/SetModalMsg',{enabled:true, title:"Error", body: i18n.t('message.infoMsg.failRegister') + "\n" + error.code + "\n" + error.message})
               });
           })
         })
@@ -292,13 +293,13 @@ export default new Vuex.Store({
       db.collection("PhotoLog").doc(user.uid).collection("Log").doc().set(args.insObj)
       .then(function (docRef) {
         commit('setLoading',false)
-        self.dispatch('widget/SetModalMsg',{enabled:true, title:"Info", body:"登録しました。"})
+        self.dispatch('widget/SetModalMsg',{enabled:true, title:"Info", body:i18n.t('message.infoMsg.compRegister')})
       })
       .catch(function (error) {
         commit('setLoading',false)
         console.log("errorCode:" + error.code)
         console.log("errorMSG:" + error.message)
-        self.dispatch('widget/SetModalMsg',{enabled:true, title:"Error", body:"登録に失敗しました。\n" + error.code + "\n" + error.message})
+        self.dispatch('widget/SetModalMsg',{enabled:true, title:"Error", body: i18n.t('message.infoMsg.failRegister') + "\n" + error.code + "\n" + error.message})
       });
 
     },
@@ -351,13 +352,13 @@ export default new Vuex.Store({
             )
             .then(function(docRef){
               commit('setLoading',false)
-              self.dispatch('widget/SetModalMsg',{enabled:true, title:"Info", body:"更新しました。"})
+              self.dispatch('widget/SetModalMsg',{enabled:true, title:"Info", body:i18n.t('message.infoMsg.compUpdate')})
             })
             .catch(function (error) {
               commit('setLoading',false)
               console.log("errorCode:" + error.code)
               console.log("errorMSG:" + error.message)
-              self.dispatch('widget/SetModalMsg',{enabled:true, title:"Error", body:"更新に失敗しました。\n" + error.code + "\n" + error.message})
+              self.dispatch('widget/SetModalMsg',{enabled:true, title:"Error", body:i18n.t('message.infoMsg.failUpdate') + "\n" + error.code + "\n" + error.message})
             });
           })
         })
@@ -382,13 +383,13 @@ export default new Vuex.Store({
       )
       .then(function(docRef){
         commit('setLoading',false)
-        self.dispatch('widget/SetModalMsg',{enabled:true, title:"Info", body:"更新しました。"})
+        self.dispatch('widget/SetModalMsg',{enabled:true, title:"Info", body:i18n.t('message.infoMsg.compUpdate')})
       })
       .catch(function (error) {
         commit('setLoading',false)
         console.log("errorCode:" + error.code)
         console.log("errorMSG:" + error.message)
-        self.dispatch('widget/SetModalMsg',{enabled:true, title:"Error", body:"更新に失敗しました。\n" + error.code + "\n" + error.message})
+        self.dispatch('widget/SetModalMsg',{enabled:true, title:"Error", body:i18n.t('message.infoMsg.failUpdate') + "\n" + error.code + "\n" + error.message})
       });
     },
 
@@ -407,13 +408,13 @@ export default new Vuex.Store({
       .then(function(docRef){
         commit('setLoading',false)
         router.push({name : 'home'})
-        self.dispatch('widget/SetModalMsg',{enabled:true, title:"Info", body:"削除しました。"})
+        self.dispatch('widget/SetModalMsg',{enabled:true, title:"Info", body:i18n.t('message.infoMsg.compDelete')})
       })
       .catch(function (error) {
         commit('setLoading',false)
         console.log("errorCode:" + error.code)
         console.log("errorMSG:" + error.message)
-        self.dispatch('widget/SetModalMsg',{enabled:true, title:"Error", body:"削除に失敗しました。\n" + error.code + "\n" + error.message})
+        self.dispatch('widget/SetModalMsg',{enabled:true, title:"Error", body:i18n.t('message.infoMsg.failDelete') + "\n" + error.code + "\n" + error.message})
       });
 
     }

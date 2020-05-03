@@ -94,7 +94,7 @@ export default {
         {
             if(this.posInput == "")
             {
-                this.$store.dispatch('widget/SetModalMsg',{enabled:true, title:"Info", body:"場所名を入力してください。"})
+                this.$store.dispatch('widget/SetModalMsg',{enabled:true, title:"Info", body:this.$t('message.infoMsg.posNameValidation')})
                 return
             }
 
@@ -119,14 +119,14 @@ export default {
             // check pos
             if(this.pos == null || this.pos.lat == null)
             {
-                this.$store.dispatch('widget/SetModalMsg',{enabled:true, title:"Info", body:"場所の指定が不正です。"})
+                this.$store.dispatch('widget/SetModalMsg',{enabled:true, title:"Info", body:this.$t('message.infoMsg.invalidPos')})
                 return
             }
 
             // 必須チェック
             if(this.name == "")
             {
-                this.$store.dispatch('widget/SetModalMsg',{enabled:true, title:"Info", body:"名称を入力してください。"})
+                this.$store.dispatch('widget/SetModalMsg',{enabled:true, title:"Info", body:this.$t('message.infoMsg.nameValidation')})
                 return
             }
 

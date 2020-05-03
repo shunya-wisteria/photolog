@@ -1,51 +1,70 @@
 {
     "ja": {
-      "message": {
-        "entry":{
-            "insertTitle" : "新規登録",
-            "searchKeyword": "場所名",
-            "posName" : "名称",
-            "posComment" : "コメント",
-            "img" : "添付画像",
-            "refUrl" : "関連記事URL",
-            "updateButton" : "更新",
-            "deleteButton" : "削除",
-            "regButton" : "登録",
-            "searchButton" : "検索"
-        },
-
-        "posInfo":{
-            "refUrl" : "関連記事"
-        },
-
-        "loginMessage" : "Googleアカウントを利用しログインしてください。",
-
-        "maplink": "埋込用URL"
-      }
+        "message": {
+            "entry": {
+                "insertTitle": "新規登録",
+                "searchKeyword": "場所名",
+                "posName": "名称",
+                "posComment": "コメント",
+                "img": "添付画像",
+                "refUrl": "関連記事URL",
+                "updateButton": "更新",
+                "deleteButton": "削除",
+                "regButton": "登録",
+                "searchButton": "検索"
+            },
+            "posInfo": {
+                "refUrl": "関連記事"
+            },
+            "loginMessage": "Googleアカウントを利用しログインしてください。",
+            "maplink": "埋込用URL",
+            "infoMsg": {
+                "posNameValidation": "場所名を入力してください。",
+                "loginRequire": "ログインしてください。",
+                "posNotFound": " が見つかりません。",
+                "compRegister": "登録しました。",
+                "failRegister": "登録に失敗しました。",
+                "compUpdate": "更新しました。",
+                "failUpdate": "更新に失敗しました。",
+                "compDelete": "削除しました。",
+                "failDelete": "削除に失敗しました。",
+                "invalidPos": "場所の指定が不正です。",
+                "nameValidation": "名称を入力してください。"
+            }
+        }
     },
     "en": {
-      "message": {
-        "entry":{
-            "insertTitle" : "Register Pos Entry",
-            "searchKeyword" : "Search Pos",
-            "posName" : "Name",
-            "posComment" : "Comment",
-            "img" : "Attachment Image",
-            "refUrl" : "Reference URL",
-            "updateButton" : "Update",
-            "deleteButton" : "Delete",
-            "regButton" : "Register",
-            "searchButton" : "Search"
-        },
-        
-        "posInfo":{
-            "refUrl" : "Reference Post"
-        },
-
-        "loginMessage" : "Please click button to login this app by your Google Account.",
-
-        "maplink": "Embedded URL"
-      }
+        "message": {
+            "entry": {
+                "insertTitle": "Register Pos Entry",
+                "searchKeyword": "Search Pos",
+                "posName": "Name",
+                "posComment": "Comment",
+                "img": "Attachment Image",
+                "refUrl": "Reference URL",
+                "updateButton": "Update",
+                "deleteButton": "Delete",
+                "regButton": "Register",
+                "searchButton": "Search"
+            },
+            "posInfo": {
+                "refUrl": "Reference Post"
+            },
+            "loginMessage": "Please click button to login this app by your Google Account.",
+            "maplink": "Embedded URL",
+            "infoMsg": {
+                "posNameValidation": "Please input Keyword.",
+                "loginRequire": "Please login.",
+                "posNotFound": " is not found.",
+                "compRegister": "Complete to Register.",
+                "failRegister": "Fail to Register.",
+                "compUpdate": "Complete to Update.",
+                "failUpdate": "Fail to Update.",
+                "compDelete": "Complete to Delete.",
+                "failDelete": "Fail to Delete.",
+                "invalidPos": "Pos information is invalid.",
+                "nameValidation": "Please input Name."
+            }
+        }
     }
-  }
-  
+}
