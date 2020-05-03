@@ -75,7 +75,7 @@ export default {
             // 必須チェック
             if(this.posData.name == "")
             {
-                this.$store.dispatch('widget/SetModalMsg',{enabled:true, title:"Info", body:"名称を入力してください。"})
+                this.$store.dispatch('widget/SetModalMsg',{enabled:true, title:"Info", body:this.$t('message.infoMsg.nameValidation')})
                 return   
             }
 

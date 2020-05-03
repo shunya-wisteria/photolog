@@ -216,12 +216,12 @@ export default {
     {
       if(this.posInput == "")
       {
-          this.$store.dispatch('widget/SetModalMsg',{enabled:true, title:"Info", body:"場所名を入力してください。"})
+          this.$store.dispatch('widget/SetModalMsg',{enabled:true, title:"Info", body:this.$t('message.infoMsg.posNameValidation')})
           return
       }
       if(!this.loginState.logined)
       {
-        this.$store.dispatch('widget/SetModalMsg',{enabled:true, title:"Info", body:"ログインしてください。"})
+        this.$store.dispatch('widget/SetModalMsg',{enabled:true, title:"Info", body:this.$t('message.infoMsg.loginRequire')})
         return
       }
 
