@@ -14,28 +14,28 @@
             <h3>Notes</h3>
             <v-form style="margin-left:10px;">
                 <v-text-field
-                    label="名称"
+                    v-bind:label="$t('message.entry.posName')"
                     required
                     color="blue-grey lighten-1"
                     v-model="posData.name"
                 ></v-text-field>
                 <v-textarea
-                    label="コメント"
+                    v-bind:label="$t('message.entry.posComment')"
                     color="blue-grey lighten-1"
                     v-model="posData.desc"
                 ></v-textarea>
 
-                <v-file-input multiple label="添付画像" v-model="imgFile"></v-file-input>
+                <v-file-input multiple v-bind:label="$t('message.entry.img')" v-model="imgFile"></v-file-input>
 
                 <v-text-field
-                    label="関連記事URL"
+                    v-bind:label="$t('message.entry.refUrl')"
                     color="blue-grey lighten-1"
                     v-model="posData.refurl"
                 ></v-text-field>
             </v-form>
 
-            <v-btn block color="secondary" v-on:click="toUpdate">更新</v-btn>
-            <v-btn block color="secondary" v-on:click="toDelete" style="margin-top:10px;">削除</v-btn>
+            <v-btn block color="secondary" v-on:click="toUpdate">{{ $t("message.entry.updateButton") }}</v-btn>
+            <v-btn block color="secondary" v-on:click="toDelete" style="margin-top:10px;">{{ $t("message.entry.deleteButton") }}</v-btn>
         </div>
 
 
