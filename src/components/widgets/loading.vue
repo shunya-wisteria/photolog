@@ -3,7 +3,15 @@
     <div class="loading-mask">
         <div class="loading-wrapper">
           <div class="loading-container">
-              <img src="@/assets/loading.gif" class="loading">
+
+              <v-progress-circular
+                :indeterminate=true
+                color="primary"
+                size=25
+                style="margin:15px 15px 0px 0px;"
+              />
+
+              <!-- <img src="@/assets/loading.gif" class="loading"> -->
           </div>
         </div>
     </div>
