@@ -12,20 +12,20 @@
       </v-col>
     </v-row>
 
-  <ListView 
-    v-if="logined"
-  />
+    <ListTable
+      v-if="logined"
+    />
   </v-container>
 </template>
 
 <script>
-  import ListView from './List';
+  import ListTable from './ListTable'
 
   export default {
     name: 'Home',
 
     components:{
-      ListView
+      ListTable
     },
 
     computed:{
