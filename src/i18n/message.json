@@ -11,7 +11,8 @@
                 "updateButton": "更新",
                 "deleteButton": "削除",
                 "regButton": "登録",
-                "searchButton": "検索"
+                "searchButton": "検索",
+                "closeButton" : "閉じる"
             },
             "posInfo": {
                 "refUrl": "関連記事"
@@ -45,7 +46,8 @@
                 "updateButton": "Update",
                 "deleteButton": "Delete",
                 "regButton": "Register",
-                "searchButton": "Search"
+                "searchButton": "Search",
+                "closeButton" : "Close"
             },
             "posInfo": {
                 "refUrl": "Reference Post"

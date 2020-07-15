@@ -63,8 +63,21 @@ export default {
         }
     },
 
+    props: ['pid'],
+
     mounted:async function(){
-        let id = this.$route.params.id
+        let id = null
+
+        // モーダル呼出
+        if(this.pid != null)
+        {
+            id = this.pid
+            return
+        }
+        
+        // ページ呼出
+        id = this.$route.params.id
+
         await this.$store.dispatch('GetPosDataSingle', id)
         scrollTo(0, 0);
     },
@@ -92,13 +105,24 @@ export default {
                 this.posData["img"] = this.imgFile[0]
             }
 
+            // データ更新
             await this.$store.dispatch('UpdatePos', this.posData)
 
             this.posData["img"] = null
+
+            // モーダル表示の場合に閉じる
+            this.$store.dispatch('SetEditModal', false)
         },
         async toDelete()
         {
+            // 削除
             await this.$store.dispatch('DeletePos', this.posData.id)
+
+            // データ再取得
+            await this.$store.dispatch('GetMyPosData')
+
+            // モーダル表示の場合に閉じる
+            this.$store.dispatch('SetEditModal', false)
         }
 
     }

@@ -18,7 +18,7 @@
           <v-col cols=10>
             <v-text-field
               filled
-              label="Search Pos"
+              label="Add New Entry"
               solo
               dense
               v-model="posInput"
