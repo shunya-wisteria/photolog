@@ -16,7 +16,8 @@ export default new Vuex.Store({
     displayControl:{
       showAsFull : null,
       showRefUrl : null,
-      loading    : false
+      loading    : false,
+      editModal  : false
     },
 
     beforeSearch : "",
@@ -43,6 +44,11 @@ export default new Vuex.Store({
     Loading(state)
     {
       return state.displayControl.loading
+    },
+
+    EditModal(state)
+    {
+      return state.displayControl.editModal
     },
 
     PosMarkers(state)
@@ -82,6 +88,11 @@ export default new Vuex.Store({
       state.displayControl.loading = payload
     },
 
+    setEditModal(state, payload)
+    {
+      state.displayControl.editModal = payload
+    },
+
     setPosMarkers(state, payload)
     {
       state.posMarkers = payload
@@ -111,6 +122,11 @@ export default new Vuex.Store({
     SetBeforeSearch({commit}, path)
     {
       commit('setBeforeSearch', path)
+    },
+
+    SetEditModal({commit}, input)
+    {
+      commit('setEditModal', input)
     },
 
     //---------------------------

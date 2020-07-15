@@ -51,7 +51,6 @@ export default {
     data(){
         return{
             search : "",
-            modal : false,
             pid : null,
 
             headers:[
@@ -83,6 +82,18 @@ export default {
             get()
             {
                 return this.$store.getters.PosMarkers
+            }
+        },
+
+        modal:
+        {
+            get()
+            {
+                return this.$store.getters['EditModal']
+            },
+            set(value)
+            {
+                this.$store.dispatch('SetEditModal', value)
             }
         }
     },

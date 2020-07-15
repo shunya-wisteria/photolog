@@ -105,13 +105,24 @@ export default {
                 this.posData["img"] = this.imgFile[0]
             }
 
+            // データ更新
             await this.$store.dispatch('UpdatePos', this.posData)
 
             this.posData["img"] = null
+
+            // モーダル表示の場合に閉じる
+            this.$store.dispatch('SetEditModal', false)
         },
         async toDelete()
         {
+            // 削除
             await this.$store.dispatch('DeletePos', this.posData.id)
+
+            // データ再取得
+            await this.$store.dispatch('GetMyPosData')
+
+            // モーダル表示の場合に閉じる
+            this.$store.dispatch('SetEditModal', false)
         }
 
     }
