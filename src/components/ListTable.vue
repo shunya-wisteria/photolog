@@ -1,14 +1,13 @@
 <template>
     <section>
-        <h2>My PhotoLog Data</h2>
-
-        <v-container>
+        <v-container style="padding-top:0px;">
+            <h2>My PhotoLog Data</h2>
             <v-text-field
-                label="Entry Search"
+                label="Search Entry"
                 v-model="search"
                 single-line
                 hide-details
-                style="margin-bottom:30px;margin-top:0px;"
+                style="margin-bottom:30px;margin-top:0px;padding-top:10px;"
                 filled
                 solo
             />
@@ -20,17 +19,40 @@
                 @click:row='onClickRow'
             />
         </v-container>
+        <v-dialog
+            v-model="modal"
+            max-width="95%"
+        >
+            <v-card
+                style="padding:30px;"
+            >
+                <Edit 
+                    :pid="pid"
+                    style="margin-bottom:-20px;"
+                />
+                <v-btn block color="secondary" v-on:click="modal=false">{{ $t("message.entry.closeButton") }}</v-btn>
+            </v-card>
+        </v-dialog>
+
 
     </section>
 </template>
 
 <script>
+import Edit from '@/components/Edit'
+
 export default {
     name : "List",
+
+    components:{
+        Edit
+    },
 
     data(){
         return{
             search : "",
+            modal : false,
+            pid : null,
 
             headers:[
                 {
@@ -48,7 +70,6 @@ export default {
             ]
         }
     },
-
 
     computed:{
         uid : {
@@ -80,9 +101,11 @@ export default {
 
         async onClickRow(data)
         {
-            let routeData = this.$router.resolve('/detail/' + data.id)
-            window.open(routeData.href, '_blank');
+            this.pid = data.id
 
+            await this.$store.dispatch('GetPosDataSingle', this.pid)
+
+            this.modal = true
         }
     }
 }

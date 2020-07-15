@@ -1,5 +1,7 @@
 <template>
-  <v-container>
+  <v-container
+    style="padding-top:0px;"
+  >
     <v-row class="text-center" v-if="!logined">
 
       <v-col class="mb-4">

@@ -63,8 +63,21 @@ export default {
         }
     },
 
+    props: ['pid'],
+
     mounted:async function(){
-        let id = this.$route.params.id
+        let id = null
+
+        // モーダル呼出
+        if(this.pid != null)
+        {
+            id = this.pid
+            return
+        }
+        
+        // ページ呼出
+        id = this.$route.params.id
+
         await this.$store.dispatch('GetPosDataSingle', id)
         scrollTo(0, 0);
     },
