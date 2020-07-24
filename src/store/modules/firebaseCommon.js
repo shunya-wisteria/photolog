@@ -85,8 +85,47 @@ export const firebaseCommon = {
                     commit('setLoginState',{logined:true})
                 }
             });
-        }
+        },
 
+        //---------------------------
+        // upload Image to Storage
+        //---------------------------        
+        async uploadImg({commit}, input)
+        {
+            let args = input.args
+            let db    = input.db
+            let self  = this
+            let url   = null
+
+            // リサイズ
+            let resizedImg = await this.dispatch('getCompressImageFileAsync', args.img)
+            if(resizedImg == null)
+            {
+                return null
+            }
+
+            // ファイルアップロード
+            try{
+                let reg = /(.*)(?:\.([^.]+$))/
+                let date = new Date()
+                let fileName = args.img.name.match(reg)[1]
+                let suffix   = args.img.name.match(reg)[2]
+                fileName = fileName + "_" + date.getTime() + "." + suffix
+
+                let storageRef = firebase.storage().ref('photolog/' + input.uid + '/' + fileName);
+
+                await storageRef.put(resizedImg)
+
+                let pathReference = firebase.storage().ref('photolog/' + input.uid + '/' + fileName);
+                url = await pathReference.getDownloadURL()
+                return url
+            }
+            catch(error)
+            {
+                console.error("file upload is error", error);
+                throw error;
+            }
+        }
 
 
         
