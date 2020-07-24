@@ -9,6 +9,8 @@ import {restcall}       from './modules/restcall'
 import {firebaseCommon} from './modules/firebaseCommon'
 import {migrate}        from './modules/migrate'
 
+import imageCompression from "browser-image-compression";
+
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -267,9 +269,23 @@ export default new Vuex.Store({
       let db = firebase.firestore()
       let self = this
       
+      let input = {
+        uid : user.uid,
+        db : db,
+        args : args
+      }
+
       // 画像あり
       if(args.insImg != null)
       {
+        // リサイズ
+        let resizedImg = await this.dispatch('getCompressImageFileAsync', args.insImg)
+        if(resizedImg == null)
+        {
+          self.dispatch('widget/SetModalMsg',{enabled:true, title:"Info", body:i18n.t('message.infoMsg.failRegister')})
+          return
+        }
+
         // ファイルアップロード
         let uploads = [];
         let reg = /(.*)(?:\.([^.]+$))/
@@ -279,7 +295,7 @@ export default new Vuex.Store({
         fileName = fileName + "_" + date.getTime() + "." + suffix
 
         let storageRef = firebase.storage().ref('photolog/' + user.uid + '/' + fileName);
-        uploads.push(storageRef.put(args.insImg));
+        uploads.push(storageRef.put(resizedImg));
 
         Promise.all(uploads).then(function () {
           let pathReference = firebase.storage().ref('photolog/' + user.uid + '/' + fileName);
@@ -288,17 +304,7 @@ export default new Vuex.Store({
               args.insObj.photo = url
 
               // DB登録
-              db.collection("PhotoLog").doc(user.uid).collection("Log").doc().set(args.insObj)
-              .then(function (docRef) {
-                self.dispatch('widget/SetModalMsg',{enabled:true, title:"Info", body:i18n.t('message.infoMsg.compRegister')})
-                commit('setLoading',false)
-              })
-              .catch(function (error) {
-                commit('setLoading',false)
-                console.log("errorCode:" + error.code)
-                console.log("errorMSG:" + error.message)
-                self.dispatch('widget/SetModalMsg',{enabled:true, title:"Error", body: i18n.t('message.infoMsg.failRegister') + "\n" + error.code + "\n" + error.message})
-              });
+              self.dispatch('insertPosDB', input)
           })
         })
 
@@ -306,7 +312,19 @@ export default new Vuex.Store({
       }
 
       // 画像なし
-      db.collection("PhotoLog").doc(user.uid).collection("Log").doc().set(args.insObj)
+      this.dispatch('insertPosDB', input)
+    },
+
+    //---------------------------
+    // InsertPosDB(for local use)
+    //---------------------------   
+    async insertPosDB({commit}, input)
+    {
+      let args  = input.args
+      let db    = input.db
+      let self  = this
+
+      db.collection("PhotoLog").doc(input.uid).collection("Log").doc().set(args.insObj)
       .then(function (docRef) {
         commit('setLoading',false)
         self.dispatch('widget/SetModalMsg',{enabled:true, title:"Info", body:i18n.t('message.infoMsg.compRegister')})
@@ -317,7 +335,6 @@ export default new Vuex.Store({
         console.log("errorMSG:" + error.message)
         self.dispatch('widget/SetModalMsg',{enabled:true, title:"Error", body: i18n.t('message.infoMsg.failRegister') + "\n" + error.code + "\n" + error.message})
       });
-
     },
 
     //---------------------------
@@ -331,9 +348,23 @@ export default new Vuex.Store({
       let db = firebase.firestore()
       let self = this
 
+      let input = {
+        uid : user.uid,
+        db : db,
+        args : args
+      }
+
       // 画像あり
       if(args.img != null)
       {
+        // リサイズ
+        let resizedImg = await this.dispatch('getCompressImageFileAsync', args.img)
+        if(resizedImg == null)
+        {
+          self.dispatch('widget/SetModalMsg',{enabled:true, title:"Info", body:i18n.t('message.infoMsg.failUpdate')})
+          return
+        }
+
         // ファイルアップロード
         let uploads = [];
         let reg = /(.*)(?:\.([^.]+$))/
@@ -343,7 +374,7 @@ export default new Vuex.Store({
         fileName = fileName + "_" + date.getTime() + "." + suffix
 
         let storageRef = firebase.storage().ref('photolog/' + user.uid + '/' + fileName);
-        uploads.push(storageRef.put(args.img));
+        uploads.push(storageRef.put(resizedImg));
 
         Promise.all(uploads).then(function () {
           let pathReference = firebase.storage().ref('photolog/' + user.uid + '/' + fileName);
@@ -352,30 +383,7 @@ export default new Vuex.Store({
             args.photo = url
 
             // DB更新
-            db.collection("PhotoLog").doc(user.uid).collection("Log").doc(args.id).set(
-              {
-                name : args.name,
-                desc : args.desc,
-                refurl: args.refurl,
-                photo: args.photo,
-                pos:{
-                  _lat : args.pos._lat,
-                  _long: args.pos._long
-                },
-                'created-at' : args['created-at'],
-                'updated-at' : args['updated-at']
-              }
-            )
-            .then(function(docRef){
-              commit('setLoading',false)
-              self.dispatch('widget/SetModalMsg',{enabled:true, title:"Info", body:i18n.t('message.infoMsg.compUpdate')})
-            })
-            .catch(function (error) {
-              commit('setLoading',false)
-              console.log("errorCode:" + error.code)
-              console.log("errorMSG:" + error.message)
-              self.dispatch('widget/SetModalMsg',{enabled:true, title:"Error", body:i18n.t('message.infoMsg.failUpdate') + "\n" + error.code + "\n" + error.message})
-            });
+            self.dispatch('updatePosDB', input)
           })
         })
 
@@ -383,7 +391,20 @@ export default new Vuex.Store({
       }
 
       // DB更新
-      db.collection("PhotoLog").doc(user.uid).collection("Log").doc(args.id).set(
+      this.dispatch('updatePosDB', input)
+    },
+
+    //---------------------------
+    // UpdatePosDB (for local use)
+    //--------------------------- 
+    async updatePosDB({commit}, input)
+    {
+      let args  = input.args
+      let db    = input.db
+      let self  = this
+
+      // DB更新
+      db.collection("PhotoLog").doc(input.uid).collection("Log").doc(args.id).set(
         {
           name : args.name,
           desc : args.desc,
@@ -433,6 +454,24 @@ export default new Vuex.Store({
         self.dispatch('widget/SetModalMsg',{enabled:true, title:"Error", body:i18n.t('message.infoMsg.failDelete') + "\n" + error.code + "\n" + error.message})
       });
 
+    },
+
+    //---------------------------
+    // 画像サイズ縮小
+    //---------------------------  
+    async getCompressImageFileAsync({commit}, file)
+    {
+      const options = {
+        maxSizeMB: 1, // 最大ファイルサイズ
+        maxWidthOrHeight: 1200 // 最大画像幅もしくは高さ
+      }
+      try {
+        // 圧縮画像の生成
+        return await imageCompression(file, options);
+      } catch (error) {
+        console.error("getCompressImageFileAsync is error", error);
+        throw error;
+      }
     }
 
   },
