@@ -55,15 +55,15 @@ export default {
 
             headers:[
                 {
-                    text : "名称",
+                    text : this.$t('message.listTable.name'),
                     value : "name"
                 },
                 {
-                    text : "登録日",
+                    text : this.$t('message.listTable.createdt'),
                     value : "created-at"
                 },
                 {
-                    text : "更新日",
+                    text : this.$t('message.listTable.updatedt'),
                     value : "updated-at"
                 }
             ]

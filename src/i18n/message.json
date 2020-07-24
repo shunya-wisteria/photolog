@@ -31,6 +31,11 @@
                 "failDelete": "削除に失敗しました。",
                 "invalidPos": "場所の指定が不正です。",
                 "nameValidation": "名称を入力してください。"
+            },
+            "listTable":{
+                "name" : "名称",
+                "createdt" : "登録日",
+                "updatedt" : "更新日"
             }
         }
     },
@@ -66,6 +71,11 @@
                 "failDelete": "Fail to Delete.",
                 "invalidPos": "Pos information is invalid.",
                 "nameValidation": "Please input Name."
+            },
+            "listTable":{
+                "name" : "Name",
+                "createdt" : "Created-At",
+                "updatedt" : "Updated-At"
             }
         }
     }
