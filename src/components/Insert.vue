@@ -26,7 +26,7 @@
                     v-model="name"
                 ></v-text-field>
                 <v-textarea
-                    v-bind:label="$t('message.entry.posName')"
+                    v-bind:label="$t('message.entry.posComment')"
                     color="blue-grey lighten-1"
                     v-model="desc"
                 ></v-textarea>
