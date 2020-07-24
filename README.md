@@ -1,5 +1,9 @@
 # photolog-front
 
+![PhotoLog Capture1](https://firebasestorage.googleapis.com/v0/b/photologv2.appspot.com/o/photolog%2Fasset%2Fpl_capture01.jpg?alt=media&token=6f836bad-a35c-4a91-910e-9357705b6ddd "Management Portal Page")
+
+![PhotoLog Capture2](https://firebasestorage.googleapis.com/v0/b/photologv2.appspot.com/o/photolog%2Fasset%2Fpl_capture02.jpg?alt=media&token=30325b9b-a236-432f-9449-b54a96d09f91 "Edit Page")
+
 ## At first
 This application needs to external services describe following.
 - Google Map API
@@ -62,7 +66,12 @@ We show how to set these credential informations to this application.
     VUE_APP_FIREBASE_MESSAGINGSENDERID="xxxxxxxxxxxxxx"
     VUE_APP_FIREBASE_APPID="xxxxxxxxxxxxxxxxxxxxxxxxx"
     ```
-3. Reboot application service.
+3. Also, write language key like following.
+    ```
+    VUE_APP_LOCALE="en"
+    * if use Japanese env, please replace "ja"
+    ```
+4. Reboot application service.
 
 ## Data Model Structure for Firebase Cloud Firestore
 This application uses Firebase Cloud Firestore to store user entries.  
