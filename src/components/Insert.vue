@@ -149,7 +149,7 @@ export default {
             insArgs["insObj"] = insObj
             if(this.imgFile != null)
             {
-                insArgs["insImg"] = this.imgFile[0]
+                insArgs["img"] = this.imgFile[0]
             }
             
             await this.$store.dispatch('InsertPos', insArgs)

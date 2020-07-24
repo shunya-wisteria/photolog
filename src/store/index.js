@@ -267,7 +267,6 @@ export default new Vuex.Store({
 
       let user = this.getters['firebaseCommon/userInfo']
       let db = firebase.firestore()
-      let self = this
       
       let input = {
         uid : user.uid,
@@ -276,42 +275,19 @@ export default new Vuex.Store({
       }
 
       // 画像あり
-      if(args.insImg != null)
+      if(args.img != null)
       {
-        // リサイズ
-        let resizedImg = await this.dispatch('getCompressImageFileAsync', args.insImg)
-        if(resizedImg == null)
+        // 画像upload
+        let url = await this.dispatch('firebaseCommon/uploadImg', input)
+        if(url == null)
         {
-          self.dispatch('widget/SetModalMsg',{enabled:true, title:"Info", body:i18n.t('message.infoMsg.failRegister')})
+          this.dispatch('widget/SetModalMsg',{enabled:true, title:"Info", body:i18n.t('message.infoMsg.failUpdate')})
           return
         }
-
-        // ファイルアップロード
-        let uploads = [];
-        let reg = /(.*)(?:\.([^.]+$))/
-        let date = new Date()
-        let fileName = args.insImg.name.match(reg)[1]
-        let suffix   = args.insImg.name.match(reg)[2]
-        fileName = fileName + "_" + date.getTime() + "." + suffix
-
-        let storageRef = firebase.storage().ref('photolog/' + user.uid + '/' + fileName);
-        uploads.push(storageRef.put(resizedImg));
-
-        Promise.all(uploads).then(function () {
-          let pathReference = firebase.storage().ref('photolog/' + user.uid + '/' + fileName);
-
-          pathReference.getDownloadURL().then(function(url) {
-              args.insObj.photo = url
-
-              // DB登録
-              self.dispatch('insertPosDB', input)
-          })
-        })
-
-        return
+        args.insObj.photo = url
       }
 
-      // 画像なし
+      // DB登録
       this.dispatch('insertPosDB', input)
     },
 
@@ -346,7 +322,7 @@ export default new Vuex.Store({
 
       let user = this.getters['firebaseCommon/userInfo']
       let db = firebase.firestore()
-      let self = this
+      // let self = this
 
       let input = {
         uid : user.uid,
@@ -357,37 +333,14 @@ export default new Vuex.Store({
       // 画像あり
       if(args.img != null)
       {
-        // リサイズ
-        let resizedImg = await this.dispatch('getCompressImageFileAsync', args.img)
-        if(resizedImg == null)
+        // 画像upload
+        let url = await this.dispatch('firebaseCommon/uploadImg', input)
+        if(url == null)
         {
-          self.dispatch('widget/SetModalMsg',{enabled:true, title:"Info", body:i18n.t('message.infoMsg.failUpdate')})
+          this.dispatch('widget/SetModalMsg',{enabled:true, title:"Info", body:i18n.t('message.infoMsg.failUpdate')})
           return
         }
-
-        // ファイルアップロード
-        let uploads = [];
-        let reg = /(.*)(?:\.([^.]+$))/
-        let date = new Date()
-        let fileName = args.img.name.match(reg)[1]
-        let suffix   = args.img.name.match(reg)[2]
-        fileName = fileName + "_" + date.getTime() + "." + suffix
-
-        let storageRef = firebase.storage().ref('photolog/' + user.uid + '/' + fileName);
-        uploads.push(storageRef.put(resizedImg));
-
-        Promise.all(uploads).then(function () {
-          let pathReference = firebase.storage().ref('photolog/' + user.uid + '/' + fileName);
-
-          pathReference.getDownloadURL().then(function(url) {
-            args.photo = url
-
-            // DB更新
-            self.dispatch('updatePosDB', input)
-          })
-        })
-
-        return
+        args.photo = url
       }
 
       // DB更新
@@ -429,6 +382,7 @@ export default new Vuex.Store({
         self.dispatch('widget/SetModalMsg',{enabled:true, title:"Error", body:i18n.t('message.infoMsg.failUpdate') + "\n" + error.code + "\n" + error.message})
       });
     },
+
 
     //---------------------------
     // DeletePos
