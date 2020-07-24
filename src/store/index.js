@@ -9,6 +9,8 @@ import {restcall}       from './modules/restcall'
 import {firebaseCommon} from './modules/firebaseCommon'
 import {migrate}        from './modules/migrate'
 
+import imageCompression from "browser-image-compression";
+
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -270,6 +272,14 @@ export default new Vuex.Store({
       // 画像あり
       if(args.insImg != null)
       {
+        // リサイズ
+        let resizedImg = await this.dispatch('getCompressImageFileAsync', args.insImg)
+        if(resizedImg == null)
+        {
+          self.dispatch('widget/SetModalMsg',{enabled:true, title:"Info", body:i18n.t('message.infoMsg.failRegister')})
+          return
+        }
+
         // ファイルアップロード
         let uploads = [];
         let reg = /(.*)(?:\.([^.]+$))/
@@ -279,7 +289,7 @@ export default new Vuex.Store({
         fileName = fileName + "_" + date.getTime() + "." + suffix
 
         let storageRef = firebase.storage().ref('photolog/' + user.uid + '/' + fileName);
-        uploads.push(storageRef.put(args.insImg));
+        uploads.push(storageRef.put(resizedImg));
 
         Promise.all(uploads).then(function () {
           let pathReference = firebase.storage().ref('photolog/' + user.uid + '/' + fileName);
@@ -334,6 +344,14 @@ export default new Vuex.Store({
       // 画像あり
       if(args.img != null)
       {
+        // リサイズ
+        let resizedImg = await this.dispatch('getCompressImageFileAsync', args.img)
+        if(resizedImg == null)
+        {
+          self.dispatch('widget/SetModalMsg',{enabled:true, title:"Info", body:i18n.t('message.infoMsg.failUpdate')})
+          return
+        }
+
         // ファイルアップロード
         let uploads = [];
         let reg = /(.*)(?:\.([^.]+$))/
@@ -343,7 +361,7 @@ export default new Vuex.Store({
         fileName = fileName + "_" + date.getTime() + "." + suffix
 
         let storageRef = firebase.storage().ref('photolog/' + user.uid + '/' + fileName);
-        uploads.push(storageRef.put(args.img));
+        uploads.push(storageRef.put(resizedImg));
 
         Promise.all(uploads).then(function () {
           let pathReference = firebase.storage().ref('photolog/' + user.uid + '/' + fileName);
@@ -433,6 +451,22 @@ export default new Vuex.Store({
         self.dispatch('widget/SetModalMsg',{enabled:true, title:"Error", body:i18n.t('message.infoMsg.failDelete') + "\n" + error.code + "\n" + error.message})
       });
 
+    },
+
+    // 画像サイズ圧縮
+    async getCompressImageFileAsync({commit}, file)
+    {
+      const options = {
+        maxSizeMB: 1, // 最大ファイルサイズ
+        maxWidthOrHeight: 1200 // 最大画像幅もしくは高さ
+      }
+      try {
+        // 圧縮画像の生成
+        return await imageCompression(file, options);
+      } catch (error) {
+        console.error("getCompressImageFileAsync is error", error);
+        throw error;
+      }
     }
 
   },
