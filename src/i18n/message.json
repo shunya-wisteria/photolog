@@ -33,6 +33,7 @@
                 "nameValidation": "名称を入力してください。"
             },
             "listTable":{
+                "photo" : "画像",
                 "name" : "名称",
                 "createdt" : "登録日",
                 "updatedt" : "更新日"
@@ -73,6 +74,7 @@
                 "nameValidation": "Please input Name."
             },
             "listTable":{
+                "photo" : "Photo",
                 "name" : "Name",
                 "createdt" : "Created-At",
                 "updatedt" : "Updated-At"
