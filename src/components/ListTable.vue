@@ -17,7 +17,22 @@
                 :items="PosData"
                 :custom-filter="filterOnlyCapsText" :search="search"
                 @click:row='onClickRow'
-            />
+            >
+                <template v-slot:[`item.photo`]="{ item }">
+                    <v-container>
+                        <v-row>
+                            <v-col cols="12"  justify="center" align="center">
+                                <v-img
+                                    :src = "item.photo"
+                                    max-width = 200px
+                                    style="margin: 5px;"
+                                />
+                            </v-col>
+                        </v-row>
+                    </v-container>
+                </template>
+            </v-data-table>
+            
         </v-container>
         <v-dialog
             v-model="modal"
@@ -54,6 +69,10 @@ export default {
             pid : null,
 
             headers:[
+                {
+                    text : this.$t('message.listTable.photo'),
+                    value : "photo"
+                },
                 {
                     text : this.$t('message.listTable.name'),
                     value : "name"
