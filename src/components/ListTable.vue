@@ -41,6 +41,10 @@
             <v-card
                 style="padding:30px;"
             >
+                <v-btn class="mx-2" fab  small style="float:right" v-on:click="modal=false">
+                    <v-icon small color="blue-grey darken-1">mdi-close-thick</v-icon>
+                </v-btn>
+
                 <Edit 
                     :pid="pid"
                     style="margin-bottom:-20px;"

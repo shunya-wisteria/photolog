@@ -4,8 +4,8 @@
         <h3>Photo</h3>
         <v-container>
             <v-row>
-                <v-col cols=12>
-                    <img v-bind:src="posData.photo" v-if="posData.photo != null" width="100%">
+                <v-col cols=12 justify="center" align="center">
+                    <img v-bind:src="posData.photo" v-if="posData.photo != null" style="max-width:700px; width:100%;">
                 </v-col>
             </v-row>
         </v-container>
