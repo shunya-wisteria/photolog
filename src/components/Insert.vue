@@ -2,45 +2,51 @@
     <section>
         <h2>{{ $t('message.entry.insertTitle') }}</h2>
 
-        <div style="margin-bottom:40px;">
-            <div style="margin-left:10px;">
-                <v-text-field
-                    v-bind:label="$t('message.entry.searchKeyword')"
-                    color="blue-grey lighten-1"
-                    v-model="posInput"
-                    v-on:keyup.enter="toSearch"
-                ></v-text-field>
-            </div>
-            <v-btn block color="secondary" v-on:click="toSearch">{{ $t('message.entry.searchButton') }}</v-btn>
-
-            <div id='map' style="width:100%; height:300px;margin-top:30px;" v-show="showMap"></div>
+        <div v-if="!logined">
+            <p>{{ $t('message.infoMsg.loginRequire') }}</p>
         </div>
 
-        <div style="margin-bottom:50px;">
-            <h3>Notes</h3>
-            <v-form style="margin-left:10px;">
-                <v-text-field
-                    v-bind:label="$t('message.entry.posName')"
-                    required
-                    color="blue-grey lighten-1"
-                    v-model="name"
-                ></v-text-field>
-                <v-textarea
-                    v-bind:label="$t('message.entry.posComment')"
-                    color="blue-grey lighten-1"
-                    v-model="desc"
-                ></v-textarea>
+        <div v-if="logined">
+            <div style="margin-bottom:40px;">
+                <div style="margin-left:10px;">
+                    <v-text-field
+                        v-bind:label="$t('message.entry.searchKeyword')"
+                        color="blue-grey lighten-1"
+                        v-model="posInput"
+                        v-on:keyup.enter="toSearch"
+                    ></v-text-field>
+                </div>
+                <v-btn block color="secondary" v-on:click="toSearch">{{ $t('message.entry.searchButton') }}</v-btn>
 
-                <v-file-input multiple v-bind:label="$t('message.entry.img')" v-on:change="selectFile" v-model="imgFile"></v-file-input>
+                <div id='map' style="width:100%; height:300px;margin-top:30px;" v-show="showMap"></div>
+            </div>
 
-                <v-text-field
-                    v-bind:label="$t('message.entry.refUrl')"
-                    color="blue-grey lighten-1"
-                    v-model="refurl"
-                ></v-text-field>
-            </v-form>
+            <div style="margin-bottom:50px;">
+                <h3>Notes</h3>
+                <v-form style="margin-left:10px;">
+                    <v-text-field
+                        v-bind:label="$t('message.entry.posName')"
+                        required
+                        color="blue-grey lighten-1"
+                        v-model="name"
+                    ></v-text-field>
+                    <v-textarea
+                        v-bind:label="$t('message.entry.posComment')"
+                        color="blue-grey lighten-1"
+                        v-model="desc"
+                    ></v-textarea>
 
-            <v-btn block color="secondary" v-on:click="toInsert">{{ $t('message.entry.regButton') }}</v-btn>
+                    <v-file-input multiple v-bind:label="$t('message.entry.img')" v-on:change="selectFile" v-model="imgFile"></v-file-input>
+
+                    <v-text-field
+                        v-bind:label="$t('message.entry.refUrl')"
+                        color="blue-grey lighten-1"
+                        v-model="refurl"
+                    ></v-text-field>
+                </v-form>
+
+                <v-btn block color="secondary" v-on:click="toInsert">{{ $t('message.entry.regButton') }}</v-btn>
+            </div>
         </div>
 
     </section>
@@ -67,6 +73,11 @@ export default {
             get()
             {
                 return this.$store.getters.PosSearch
+            }
+        },
+        logined :{
+            get(){
+                return this.$store.getters['firebaseCommon/loginState'].logined
             }
         }
     },

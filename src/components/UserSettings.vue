@@ -2,7 +2,11 @@
     <section>
         <h2>{{ $t("message.userSettings.title") }}</h2>
 
-        <div>
+        <div v-if="!logined">
+            <p>{{ $t('message.infoMsg.loginRequire') }}</p>
+        </div>
+
+        <div v-if="logined">
             <h3>{{ $t("message.userSettings.refUrl") }}</h3>
             <v-switch
                 v-bind:label="$t('message.userSettings.mypage')"
@@ -37,7 +41,11 @@ export default {
                 this.settings = value
                 this.$store.dispatch('SetUserSettings',value)
             }
-
+        },
+        logined :{
+            get(){
+                return this.$store.getters['firebaseCommon/loginState'].logined
+            }
         }
     },
 
