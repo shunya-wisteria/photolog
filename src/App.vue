@@ -91,6 +91,14 @@
           </v-list-item>
         </router-link>
 
+        <router-link :to="{name:'settings'}" style="text-decoration:none">
+          <v-list-item v-on:click="toLink()">
+            <v-list-item-content>
+              <v-list-item-title>Settings</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </router-link>
+
         <v-list-item v-on:click="toLogout()">
           <v-list-item-content>
             <v-list-item-title>LogOut</v-list-item-title>
