@@ -50,13 +50,6 @@ export default {
             }
         }
 
-        // showRefUrl : {
-        //     get()
-        //     {
-        //         return this.$store.getters.ShowRefUrl
-        //     }
-        // }
-
     },
 
     mounted:async function(){

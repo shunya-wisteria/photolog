@@ -135,13 +135,18 @@ export default new Vuex.Store({
       commit('setEditModal', input)
     },
 
+    SetUserSettings({commit}, input)
+    {
+      commit('setUserSettings', input)
+    },
+
     //---------------------------
-    //  Read User Settings
+    //  Read User Settings local
     //---------------------------
     async getUserSettings({commit}, uid)
     {
       let db = firebase.firestore()
-      let fbUserSettings = await (await db.collection("PhotoLog").doc(uid).get()).data()
+      let fbUserSettings = (await db.collection("PhotoLog").doc(uid).get()).data()
 
       let userSettings = 
       {
@@ -161,6 +166,51 @@ export default new Vuex.Store({
       }
 
       commit('setUserSettings', userSettings)
+    },
+
+    async GetUserSettings({commit})
+    {
+      commit('setLoading',true)
+
+      let self = this
+      firebase.auth().onAuthStateChanged(async function(user) {
+        if (user) {
+          await self.dispatch('getUserSettings', user.uid)
+        }
+      });
+
+      commit('setLoading',false)
+    },
+
+    //---------------------------
+    // Save User Settings
+    //---------------------------  
+    async SaveUserSettings({commit})
+    {
+      commit('setLoading',true)
+
+      let user = this.getters['firebaseCommon/userInfo']
+      let db = firebase.firestore()
+
+      let self = this
+
+      // DB更新
+      db.collection("PhotoLog").doc(user.uid).set(
+        {
+          refUrlMypage : this.state.userSettings.refUrlMypage,
+          refUrlOpen : this.state.userSettings.refUrlOpen
+        }
+      )
+      .then(function(docRef){
+        commit('setLoading',false)
+        self.dispatch('widget/SetModalMsg',{enabled:true, title:"Info", body:i18n.t('message.infoMsg.compUpdate')})
+      })
+      .catch(function (error) {
+        commit('setLoading',false)
+        console.log("errorCode:" + error.code)
+        console.log("errorMSG:" + error.message)
+        self.dispatch('widget/SetModalMsg',{enabled:true, title:"Error", body:i18n.t('message.infoMsg.failUpdate') + "\n" + error.code + "\n" + error.message})
+      });
     },
 
     //---------------------------

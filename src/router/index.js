@@ -7,6 +7,7 @@ import Login        from '@/components/Login.vue'
 import Insert       from '@/components/Insert.vue'
 import Edit         from '@/components/Edit.vue'
 import Search       from '@/components/Search.vue'
+import UserSettings from '@/components/UserSettings.vue'
 import Migrate      from '@/components/Migrate.vue'
 import { migrate } from '../store/modules/migrate'
 
@@ -45,6 +46,11 @@ const router = new Router({
         path: '/search',
         name: 'search',
         component: Search
+      },
+      {
+        path: '/settings',
+        name: 'settings',
+        component: UserSettings
       }
 
       // {
@@ -63,7 +69,7 @@ router.beforeEach((to, from, next)=> async function(){
     {
         store.commit('setShowAsFull', false)
     }
-    
+
     next()
 }())
 
