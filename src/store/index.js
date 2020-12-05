@@ -17,7 +17,6 @@ export default new Vuex.Store({
   state: {
     displayControl:{
       showAsFull : null,
-      showRefUrl : null,
       loading    : false,
       editModal  : false
     },
@@ -41,11 +40,6 @@ export default new Vuex.Store({
     ShowAsFull(state)
     {
       return state.displayControl.showAsFull
-    },
-
-    ShowRefUrl(state)
-    {
-      return state.displayControl.showRefUrl
     },
 
     ShowUserSettings(state)
@@ -88,11 +82,6 @@ export default new Vuex.Store({
     setShowAsFull(state,payload)
     {
       state.displayControl.showAsFull = payload
-    },
-
-    setShowRefUrl(state,payload)
-    {
-      state.displayControl.showRefUrl = payload
     },
 
     setUserSettings(state, payload)

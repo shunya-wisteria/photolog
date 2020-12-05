@@ -69,7 +69,7 @@ export default {
         //  地図描画
         this.initMap()
 
-        this.mapUrl = location.href + "?mode=1&refurl=1"
+        this.mapUrl = location.href + "?mode=1"
     },
 
     methods:{

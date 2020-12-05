@@ -63,16 +63,7 @@ router.beforeEach((to, from, next)=> async function(){
     {
         store.commit('setShowAsFull', false)
     }
-
-    if(to.query["refurl"]==1)
-    {
-      store.commit('setShowRefUrl', true)
-    }
-    else
-    {
-      store.commit('setShowRefUrl', false)
-    }
-
+    
     next()
 }())
 
