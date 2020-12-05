@@ -22,6 +22,11 @@ export default new Vuex.Store({
       editModal  : false
     },
 
+    userSettings:{
+      refUrlMypage : false,
+      refUrlOpen : false
+    },
+
     beforeSearch : "",
 
     // poslMakers
@@ -41,6 +46,11 @@ export default new Vuex.Store({
     ShowRefUrl(state)
     {
       return state.displayControl.showRefUrl
+    },
+
+    ShowUserSettings(state)
+    {
+      return state.userSettings
     },
 
     Loading(state)
@@ -83,6 +93,11 @@ export default new Vuex.Store({
     setShowRefUrl(state,payload)
     {
       state.displayControl.showRefUrl = payload
+    },
+
+    setUserSettings(state, payload)
+    {
+      state.userSettings = payload
     },
 
     setLoading(state,payload)
@@ -132,11 +147,41 @@ export default new Vuex.Store({
     },
 
     //---------------------------
+    //  Read User Settings
+    //---------------------------
+    async getUserSettings({commit}, uid)
+    {
+      let db = firebase.firestore()
+      let fbUserSettings = await (await db.collection("PhotoLog").doc(uid).get()).data()
+
+      let userSettings = 
+      {
+        refUrlMypage : false,
+        refUrlOpen : false
+      }
+
+      // MypageのrefUrl
+      if(fbUserSettings["refUrlMypage"] != null)
+      {
+        userSettings.refUrlMypage = fbUserSettings["refUrlMypage"]
+      }
+
+      // OpenPageのrefUrl
+      {
+        userSettings.refUrlOpen = fbUserSettings["refUrlOpen"]
+      }
+
+      commit('setUserSettings', userSettings)
+    },
+
+    //---------------------------
     // Read PosData from Firebase
     //---------------------------
     async GetPosData({commit}, uid)
     {
       commit('setLoading',true)
+
+      this.dispatch('getUserSettings', uid)
 
       let posMarkers = []
 
