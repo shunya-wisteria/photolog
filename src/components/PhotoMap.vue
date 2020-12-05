@@ -43,10 +43,10 @@ export default {
             }
         },
 
-        showRefUrl : {
+        showUserSettings : {
             get()
             {
-                return this.$store.getters.ShowRefUrl
+                return this.$store.getters.ShowUserSettings
             }
         }
 
@@ -62,7 +62,7 @@ export default {
         //  地図描画
         this.initMap()
 
-        this.mapUrl = location.href + "?mode=1&refurl=1"
+        this.mapUrl = location.href + "?mode=1"
     },
 
     methods:{
@@ -72,6 +72,20 @@ export default {
                 center: mapLatLng,
                 zoom: 7
             });
+
+            let showRefUrl = false
+            // refUrl表示設定
+            // 全画面表示（OpenPage）
+            if(this.showAsFull)
+            {
+                showRefUrl = this.showUserSettings.refUrlOpen
+            }
+            // MyPage
+            else
+            {
+                showRefUrl = this.showUserSettings.refUrlMypage
+            }
+
 
             for (var i = 0; i < this.$store.getters.PosMarkers.length; i++) {
                 let markerLatLng = new google.maps.LatLng({lat: this.$store.getters.PosMarkers[i].lat, lng: this.$store.getters.PosMarkers[i].lng}); // 緯度経度のデータ作成
@@ -83,7 +97,7 @@ export default {
 
                 let contentHtml = "<div style='padding: 5px 10px 10px 10px; display:block;'><p style='color:#555555; font-size:150%; font-weight:400; margin-bottom:8px;'>" + this.$store.getters.PosMarkers[i].name + "</p>"
                 contentHtml = contentHtml + "<p style='color:#555555; margin-bottom:8px;'>" + this.$store.getters.PosMarkers[i].desc + "</p>"
-                if(this.$store.getters.PosMarkers[i].refurl != null && this.$store.getters.PosMarkers[i].refurl != "" && this.showRefUrl)
+                if(this.$store.getters.PosMarkers[i].refurl != null && this.$store.getters.PosMarkers[i].refurl != "" && showRefUrl)
                 {
                     contentHtml = contentHtml + "<p style='margin-bottom:8px;'><a href='" + this.$store.getters.PosMarkers[i].refurl +  "' target='_blank' style='color:#555555;'>" + this.$t('message.posInfo.refUrl') + "</a></p>"
                 }

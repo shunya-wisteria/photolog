@@ -37,6 +37,13 @@
                 "name" : "名称",
                 "createdt" : "登録日",
                 "updatedt" : "更新日"
+            },
+            "userSettings":{
+                "title" : "ユーザー設定",
+                "refUrl" : "関連URL表示・非表示",
+                "mypage" : "MyPage",
+                "openpage" : "埋込ページ",
+                "updateBtn" : "更新"
             }
         }
     },
@@ -78,6 +85,13 @@
                 "name" : "Name",
                 "createdt" : "Created-At",
                 "updatedt" : "Updated-At"
+            },
+            "userSettings":{
+                "title" : "User Settings",
+                "refUrl" : "Display Ref Page URL",
+                "mypage" : "MyPage",
+                "openpage" : "EmbeddedPage",
+                "updateBtn" : "Update"
             }
         }
     }
