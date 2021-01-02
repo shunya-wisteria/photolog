@@ -482,7 +482,10 @@ export default new Vuex.Store({
       db.collection("PhotoLog").doc(user.uid).collection("Log").doc(id).delete()
       .then(function(docRef){
         commit('setLoading',false)
-        router.push({name : 'home'})
+        if(location.pathname != '/')
+        {
+          router.push({name : 'home'})
+        }
         self.dispatch('widget/SetModalMsg',{enabled:true, title:"Info", body:i18n.t('message.infoMsg.compDelete')})
       })
       .catch(function (error) {
