@@ -19,6 +19,7 @@
             },
             "loginMessage": "Googleアカウントを利用しログインしてください。",
             "maplink": "埋込用URL",
+            "mapListTitle" : "一覧",
             "infoMsg": {
                 "posNameValidation": "場所名を入力してください。",
                 "loginRequire": "ログインしてください。",
@@ -67,6 +68,7 @@
             },
             "loginMessage": "Please click button to login this app by your Google Account.",
             "maplink": "Embedded URL",
+            "mapListTitle" : "PosList",
             "infoMsg": {
                 "posNameValidation": "Please input Keyword.",
                 "loginRequire": "Please login.",
