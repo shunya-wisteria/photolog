@@ -5,7 +5,7 @@
         <v-card id="posList"
             color="white"
             :hover=true
-            width="30%"
+            width="50%"
             max-width="350px"
             v-if="!listBox"
         >
@@ -21,7 +21,7 @@
         <v-card id="posList"
             color="white"
             :hover=true
-            width="30%"
+            width="50%"
             max-width="350px"
             height="70%"
             max-height="480px"
