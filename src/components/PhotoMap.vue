@@ -2,6 +2,51 @@
     <section>
         <div id="map"></div>
         
+        <v-card id="posList"
+            color="white"
+            :hover=true
+            width="30%"
+            max-width="350px"
+            v-if="!listBox"
+        >
+            <v-btn fab  small style="float:right; margin:10px;" v-on:click="listBox=true">
+                <v-icon small color="blue-grey darken-1">mdi-window-maximize</v-icon>
+            </v-btn>
+            <v-card-title>
+                {{ $t("message.mapListTitle") }}
+            </v-card-title>
+
+        </v-card>
+
+        <v-card id="posList"
+            color="white"
+            :hover=true
+            width="30%"
+            max-width="350px"
+            height="70%"
+            max-height="480px"
+            v-if="listBox"
+        >
+
+                <v-btn fab  small style="float:right; margin:10px;" v-on:click="listBox=false">
+                    <v-icon small color="blue-grey darken-1">mdi-window-minimize</v-icon>
+                </v-btn>
+
+            <v-card-title>
+                {{ $t("message.mapListTitle") }}
+            </v-card-title>
+
+            <v-data-table
+                :headers="headers"
+                :items="PosData"
+                :items-per-page="5"
+                @click:row='onClickRow'
+                style="margin:10px;"
+            />
+
+
+        </v-card>
+
         <div
             v-if="!showAsFull"
             style="margin-top:30px;"
@@ -31,7 +76,19 @@ export default {
 
             infoMsgs : this.$store.getters.portalInfos,
 
-            mapUrl : ""
+            mapUrl : "",
+
+            headers:[
+                {
+                    text : this.$t('message.listTable.name'),
+                    value : "name"
+                },
+                {
+                    text : this.$t('message.listTable.updatedt'),
+                    value : "updated-at"
+                }
+            ],
+            listBox : true
         }
     },
 
@@ -48,7 +105,15 @@ export default {
             {
                 return this.$store.getters.ShowUserSettings
             }
-        }
+        },
+
+        PosData:
+        {
+            get()
+            {
+                return this.$store.getters.PosMarkers
+            }
+        },
 
     },
 
@@ -120,6 +185,11 @@ export default {
             this.marker[i].addListener('click', function() { // マーカーをクリックしたとき
                 self.infoWindow[i].open(self.map, self.marker[i]); // 吹き出しの表示
             });
+        },
+
+        async onClickRow(data){
+            let rowIndex = this.PosData.indexOf(data)
+            this.infoWindow[rowIndex].open(this.map, this.marker[rowIndex])
         }
     }
 
@@ -130,5 +200,14 @@ export default {
     #map {
         height: 600px;
         width: 100%;
+    }
+
+    #posList {
+        overflow-x: auto;
+        overflow-y: auto;
+        position: absolute;
+        top:90px;
+        margin-left: 10px;
+        /* padding:10px; */
     }
 </style>
