@@ -3,7 +3,7 @@
         "message": {
             "entry": {
                 "insertTitle": "新規登録",
-                "searchKeyword": "場所名",
+                "searchKeyword": "場所検索キーワード",
                 "posName": "名称",
                 "posComment": "コメント",
                 "img": "添付画像",
@@ -12,7 +12,8 @@
                 "deleteButton": "削除",
                 "regButton": "登録",
                 "searchButton": "検索",
-                "closeButton" : "閉じる"
+                "closeButton" : "閉じる",
+                "curPosButton" : "現在地取得"
             },
             "posInfo": {
                 "refUrl": "関連記事"
@@ -52,7 +53,7 @@
         "message": {
             "entry": {
                 "insertTitle": "Register Pos Entry",
-                "searchKeyword": "Search Pos",
+                "searchKeyword": "Search Pos Keyword",
                 "posName": "Name",
                 "posComment": "Comment",
                 "img": "Attachment Image",
@@ -61,7 +62,8 @@
                 "deleteButton": "Delete",
                 "regButton": "Register",
                 "searchButton": "Search",
-                "closeButton" : "Close"
+                "closeButton" : "Close",
+                "curPosButton" : "Get Current Pos"
             },
             "posInfo": {
                 "refUrl": "Reference Post"

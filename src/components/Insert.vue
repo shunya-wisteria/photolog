@@ -17,6 +17,7 @@
                     ></v-text-field>
                 </div>
                 <v-btn block color="secondary" v-on:click="toSearch">{{ $t('message.entry.searchButton') }}</v-btn>
+                <v-btn block color="secondary" v-on:click="toCurPos" style="margin-top:15px;">{{ $t('message.entry.curPosButton') }}</v-btn>
 
                 <div id='map' style="width:100%; height:300px;margin-top:30px;" v-show="showMap"></div>
             </div>
@@ -65,7 +66,14 @@ export default {
         refurl:"",
         imgFile : null,
 
-        showMap : false
+        showMap : false,
+
+        navOption : {
+            enableHighAccuracy : true,
+            timeout : 8000,
+            maximumAge : 5000
+        }
+
     }),
 
     computed:{
@@ -78,6 +86,12 @@ export default {
         logined :{
             get(){
                 return this.$store.getters['firebaseCommon/loginState'].logined
+            }
+        },
+        searchedWord:{
+            get()
+            {
+                return this.$store.getters.SearchedWord 
             }
         }
     },
@@ -94,9 +108,13 @@ export default {
                 position: this.pos,
                 map: map
             });
-
+            this.name = this.searchedWord
             this.showMap = true   
         }
+        // init desc textarea
+        let dt = new Date()
+        this.desc = dt.getFullYear().toString() + "." + ('0' + (dt.getMonth() + 1)).slice(-2) + "." + ('0' + dt.getDate()).slice(-2)
+
         scrollTo(0, 0);
     },
 
@@ -122,7 +140,34 @@ export default {
             });
 
             this.showMap = true
+            this.name = this.searchedWord
 
+        },
+
+        toCurPos()
+        {
+            navigator.geolocation.getCurrentPosition(this.onNavSuccess , this.onNavError, this.navOption);
+        },
+        onNavSuccess(pos)
+        {
+            this.$store.dispatch('SetPosSearch', {lat:pos.coords.latitude, lng:pos.coords.longitude})
+
+            // initMap
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 15,
+                center: this.pos
+            })
+            var maker =  new google.maps.Marker({
+                position: this.pos,
+                map: map
+            });
+
+            this.showMap = true
+
+        },
+        onNavError(error)
+        {
+            console.log(error.code)
         },
 
         async toInsert()
@@ -182,3 +227,5 @@ export default {
 
 }
 </script>
+<style scoped>
+</style>

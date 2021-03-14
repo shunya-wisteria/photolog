@@ -33,7 +33,8 @@ export default new Vuex.Store({
     posData : {},
 
     // pos search
-    posSearch : null
+    posSearch : null,
+    searchedWord : null
   },
 
   getters:{
@@ -70,6 +71,10 @@ export default new Vuex.Store({
     PosSearch(state)
     {
       return state.posSearch
+    },
+    SearchedWord(state)
+    {
+      return state.searchedWord
     },
 
     BeforeSearch(state)
@@ -113,6 +118,10 @@ export default new Vuex.Store({
     {
       state.posSearch = payload
     },
+    setSearchedWord(state, payload)
+    {
+      state.searchedWord = payload
+    },
 
     setBeforeSearch(state, payload)
     {
@@ -138,6 +147,11 @@ export default new Vuex.Store({
     SetUserSettings({commit}, input)
     {
       commit('setUserSettings', input)
+    },
+
+    SetPosSearch({commit}, input)
+    {
+      commit('setPosSearch', input)
     },
 
     //---------------------------
@@ -335,9 +349,11 @@ export default new Vuex.Store({
       if(posRes.status == 200 && posRes.data.status == "OK")
       {
         commit('setPosSearch',{lat:posRes.data.results[0].geometry.location.lat, lng:posRes.data.results[0].geometry.location.lng})
+        commit('setSearchedWord', inputStr)
       }
       else
       {
+        commit('setSearchedWord', null)
         this.dispatch('widget/SetModalMsg',{enabled:true, title:"Error", body:inputStr + i18n.t('message.infoMsg.posNotFound') })
       }
     },
@@ -373,6 +389,7 @@ export default new Vuex.Store({
 
       // DB登録
       this.dispatch('insertPosDB', input)
+      this.dispatch('SetPosSearch', null)
     },
 
     //---------------------------
