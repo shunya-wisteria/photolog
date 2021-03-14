@@ -140,6 +140,11 @@ export default new Vuex.Store({
       commit('setUserSettings', input)
     },
 
+    SetPosSearch({commit}, input)
+    {
+      commit('setPosSearch', input)
+    },
+
     //---------------------------
     //  Read User Settings local
     //---------------------------
