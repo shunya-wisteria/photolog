@@ -87,6 +87,12 @@ export default {
             get(){
                 return this.$store.getters['firebaseCommon/loginState'].logined
             }
+        },
+        searchedWord:{
+            get()
+            {
+                return this.$store.getters.SearchedWord 
+            }
         }
     },
 
@@ -102,7 +108,7 @@ export default {
                 position: this.pos,
                 map: map
             });
-
+            this.name = this.searchedWord
             this.showMap = true   
         }
         // init desc textarea
@@ -134,6 +140,7 @@ export default {
             });
 
             this.showMap = true
+            this.name = this.searchedWord
 
         },
 
