@@ -378,6 +378,7 @@ export default new Vuex.Store({
 
       // DB登録
       this.dispatch('insertPosDB', input)
+      this.dispatch('SetPosSearch', null)
     },
 
     //---------------------------
