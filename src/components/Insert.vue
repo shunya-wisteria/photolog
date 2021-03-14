@@ -97,6 +97,10 @@ export default {
 
             this.showMap = true   
         }
+        // init desc textarea
+        let dt = new Date()
+        this.desc = dt.getFullYear().toString() + "." + ('0' + (dt.getMonth() + 1)).slice(-2) + "." + ('0' + dt.getDate()).slice(-2)
+
         scrollTo(0, 0);
     },
 
