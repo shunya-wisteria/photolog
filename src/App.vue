@@ -50,6 +50,7 @@
 
     <v-navigation-drawer
       v-model="drawer"
+      v-if="!showAsFull"
       absolute
       temporary
       style="position:fixed; top:0; left:0;"
