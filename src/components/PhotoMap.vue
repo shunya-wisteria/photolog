@@ -189,7 +189,18 @@ export default {
 
         async onClickRow(data){
             let rowIndex = this.PosData.indexOf(data)
-            this.infoWindow[rowIndex].open(this.map, this.marker[rowIndex])
+            // InfoWindow非表示の場合
+            if(this.infoWindow[rowIndex].getMap()==null || this.infoWindow[rowIndex].getMap()=="undefined")
+            {
+                // InfoWindowを表示する
+                this.infoWindow[rowIndex].open(this.map, this.marker[rowIndex])
+            }
+            // InfoWindow表示の場合
+            else
+            {
+                // InfoWindowを閉じる
+                this.infoWindow[rowIndex].close()
+            }
         }
     }
 
