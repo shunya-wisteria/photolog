@@ -1,7 +1,7 @@
 import Vue        from 'vue'
 import Vuex       from 'vuex'
 import router     from '@/router'
-import firebase   from 'firebase'
+import firebase   from 'firebase/compat/app'
 import i18n       from '@/i18n';
 
 import {widget}         from './modules/widget'

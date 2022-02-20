@@ -4,10 +4,10 @@ import store from './store'
 import router from './router'
 import vuetify from './plugins/vuetify';
 import i18n from './i18n';
-import firebase from 'firebase/app'
-import 'firebase/app'
-import 'firebase/auth'
-import 'firebase/firestore'
+import firebase from 'firebase/compat/app'
+import 'firebase/compat/app'
+import 'firebase/compat/auth'
+import 'firebase/compat/firestore'
 
 Vue.config.productionTip = false
 
