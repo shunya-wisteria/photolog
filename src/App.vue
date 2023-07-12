@@ -36,7 +36,7 @@
 
     </v-app-bar>
 
-    <v-content style="background-color:#F5F5F5">
+    <v-content style="background-color:#FFF">
       <v-container style="margin-top:10px;">
         <v-row align="center" justify="center">
           <v-col cols=12>
