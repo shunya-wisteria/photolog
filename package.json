@@ -8,7 +8,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "axios": "^0.21.1",
+    "axios": "^1.17.0",
     "browser-image-compression": "^1.0.12",
     "core-js": "^3.6.4",
     "firebase": "^9.6.7",
